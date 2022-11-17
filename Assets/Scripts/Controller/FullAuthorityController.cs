@@ -4,9 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FullAuthorityController : MonoBehaviour
+public class FullAuthorityController : MonoBehaviourPun
 {
+
     // Start is called before the first frame update
+
+    //private void Awake()
+    //{
+    //    if (photonView.IsMine)
+    //    {
+    //        charAnimations = GetComponent<CharacterAnimations>();
+    //    }
+    //}
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -27,15 +36,12 @@ public class FullAuthorityController : MonoBehaviour
         if (dir != Vector3.zero)
         {
 
-            if (MasterManager.Instance.CharactersDictionary.ContainsKey(PhotonNetwork.LocalPlayer))
-            {
-                MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isCharacterMoving", true);
-            }
+            //if (MasterManager.Instance.CharactersDictionary.ContainsKey(PhotonNetwork.LocalPlayer))
+            //{
+            //    MasterManager.Instance.CharactersDictionary[PhotonNetwork.LocalPlayer].CharAnimations.RunAnimation(true);
+            //}
             MasterManager.Instance.HandleRPC("RequestMove", PhotonNetwork.LocalPlayer, dir);
         }
-        else
-        {
-            MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isCharacterMoving", false);
-        }
+
     }
 }

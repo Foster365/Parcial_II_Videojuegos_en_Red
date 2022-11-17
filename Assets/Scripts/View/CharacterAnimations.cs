@@ -23,20 +23,20 @@ public class CharacterAnimations : MonoBehaviour
     {
         characterAnimator.SetBool(TagManager.CHARACTER_CLIMB_WALL_ANIMATION_TAG, _isClimbing);
     }
-    public void SlideAnimation()
+    public void SlideAnimation(bool _isSliding)
     {
-        characterAnimator.SetTrigger(TagManager.CHARACTER_SLIDE_ANIMATION_TAG);
+        characterAnimator.SetBool(TagManager.CHARACTER_SLIDE_ANIMATION_TAG, _isSliding);
     }
-    public void DashAnimation()
+    public void DashAnimation(bool _isDashing)
     {
-        characterAnimator.SetTrigger(TagManager.CHARACTER_DASH_ANIMATION_TAG);
+        characterAnimator.SetBool(TagManager.CHARACTER_DASH_ANIMATION_TAG, _isDashing);
     }
-    public void ShootAnimation()
+    public void ShootAnimation(bool _isShooting)
     {
-        characterAnimator.SetTrigger(TagManager.CHARACTER_SHOOT_ANIMATION_TAG);
+        characterAnimator.SetBool(TagManager.CHARACTER_SHOOT_ANIMATION_TAG, _isShooting);
     }
-    public void DeathAnimation()
+    public void DeathAnimation(bool _isDying)
     {
-        characterAnimator.SetTrigger(TagManager.CHARACTER_DIE_ANIMATION_TAG);
+        characterAnimator.SetBool(TagManager.CHARACTER_DIE_ANIMATION_TAG, _isDying);
     }
 }

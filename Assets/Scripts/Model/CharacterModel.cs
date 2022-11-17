@@ -10,11 +10,13 @@ public class CharacterModel : MonoBehaviourPun
     [SerializeField] float speed, rotationSpeed, jumpForce;
     Rigidbody rb;
 
+    CharacterAnimations charAnimations;
     GameManager characterGameManager;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        charAnimations = GetComponent<CharacterAnimations>();
     }
 
     public GameManager SetCharacterGameManager
@@ -25,11 +27,15 @@ public class CharacterModel : MonoBehaviourPun
         }
     }
 
+    public CharacterAnimations CharAnimations { get => charAnimations; set => charAnimations = value; }
+    public float Speed { get => speed; set => speed = value; }
+
     public void Move(Vector3 _dir)
     {
         _dir *= speed;
         _dir.y = rb.velocity.y;
         rb.velocity = _dir;
+
     }
 
     public void Jump()

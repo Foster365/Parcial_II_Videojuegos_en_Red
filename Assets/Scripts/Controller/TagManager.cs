@@ -5,13 +5,14 @@ using UnityEngine;
 public class TagManager : MonoBehaviour
 {
     #region Animations_Tags
-    public const string CHARACTER_RUN_ANIMATION_TAG = "isCharacterMoving";
-    public const string CHARACTER_CROUCH_ANIMATION_TAG = "isCharacterCrouching";
-    public const string CHARACTER_CLIMB_WALL_ANIMATION_TAG = "isCharacterClimbingWall";
-    public const string CHARACTER_JUMP_ANIMATION_TAG = "characterJump";
-    public const string CHARACTER_SLIDE_ANIMATION_TAG = "characterSlide"; //Confirmar
-    public const string CHARACTER_DASH_ANIMATION_TAG = "characterDash";
-    public const string CHARACTER_SHOOT_ANIMATION_TAG = "characterShoot";
-    public const string CHARACTER_DIE_ANIMATION_TAG = "characterDeath";
+    public const string CHARACTER_RUN_ANIMATION_TAG = "isCharacterMove";
+    public const string CHARACTER_CROUCH_ANIMATION_TAG = "isCharacterCrouch";
+    public const string CHARACTER_CLIMB_WALL_ANIMATION_TAG = "isCharacterClimbWall";
+    public const string CHARACTER_JUMP_ANIMATION_TAG = "isCharacterJump";
+    public const string CHARACTER_SLIDE_ANIMATION_TAG = "isCharacterSlide"; //Confirmar
+    public const string CHARACTER_DASH_ANIMATION_TAG = "isCharacterDash";
+    public const string CHARACTER_SHOOT_ANIMATION_TAG = "isCharacterShoot";
+    public const string CHARACTER_DAMAGE_ANIMATION_TAG = "isCharacterDamage";
+    public const string CHARACTER_DIE_ANIMATION_TAG = "isCharacterDeath";
     #endregion
 }

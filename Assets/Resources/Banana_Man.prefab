@@ -115,7 +115,8 @@ GameObject:
   - component: {fileID: 4644380713349286440}
   - component: {fileID: 4814701104289863176}
   - component: {fileID: 2745068413564592780}
-  - component: {fileID: -3358850591551481399}
+  - component: {fileID: -65627063896632664}
+  - component: {fileID: 4719078645757118815}
   m_Layer: 0
   m_Name: Banana_Man
   m_TagString: Untagged
@@ -208,6 +209,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2745068413564592780}
+  - {fileID: 4719078645757118815}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -224,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  rotationSpeed: 5
+  rotationSpeed: 10
   jumpForce: 10
 --- !u!114 &4814701104289863176
 MonoBehaviour:
@@ -255,8 +257,20 @@ MonoBehaviour:
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &-3358850591551481399
+  m_TeleportIfDistanceGreaterThan: 2
+--- !u!114 &-65627063896632664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5988206798461184575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f0c43752731514cb9c939db23eb024, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4719078645757118815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,8 +284,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: isCharacterMoving
+  - Type: 4
+    SynchronizeType: 2
+    Name: isCharacterCrouching
+  - Type: 4
+    SynchronizeType: 2
+    Name: isCharacterClimbingWall
+  - Type: 4
+    SynchronizeType: 2
+    Name: characterJump
+  - Type: 4
+    SynchronizeType: 2
+    Name: characterSlide
+  - Type: 4
+    SynchronizeType: 2
+    Name: characterDash
+  - Type: 4
+    SynchronizeType: 2
+    Name: characterShoot
+  - Type: 4
+    SynchronizeType: 2
+    Name: characterDeath
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1001 &1089775341441365986
 PrefabInstance:
   m_ObjectHideFlags: 0
