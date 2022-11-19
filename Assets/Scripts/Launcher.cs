@@ -6,21 +6,24 @@ public class Launcher : MonoBehaviour
 {
     public Transform spawnPoint;
     public GameObject grenade;
+    public GameObject me;
 
     public float range = 15f;
+    public int currentShootAmount;
+    public int maxShootAmount;
+    public PickUpController pickUp;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
             Launch();
+        }
+
+        if(currentShootAmount == maxShootAmount)
+        {
+            Destroy(me);
+            pickUp.Drop();
         }
     }
 
@@ -28,5 +31,6 @@ public class Launcher : MonoBehaviour
     {
         GameObject grenadeInstance = Instantiate(grenade, spawnPoint.position, spawnPoint.rotation);
         grenadeInstance.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * range, ForceMode.Impulse);
+        currentShootAmount++;
     }
 }

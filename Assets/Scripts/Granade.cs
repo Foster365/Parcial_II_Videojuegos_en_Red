@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Granade : MonoBehaviour
 {
-    public float delay = 1f;
+    public float delay = .5f;
 
     public float explosionForce = 10f;
     public float radius = 10f;
+
+    public GameObject effect;
     private void Start()
     {
         Invoke("Explode", delay);
@@ -44,6 +46,7 @@ public class Granade : MonoBehaviour
             }
             Debug.Log(hit.name);
         }
+        Instantiate(effect, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

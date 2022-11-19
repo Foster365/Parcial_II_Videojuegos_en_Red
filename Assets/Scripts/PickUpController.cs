@@ -45,4 +45,10 @@ public class PickUpController : MonoBehaviour
 
         launcherScript.enabled = true;
     }
+
+    public void Drop()
+    {
+        equipped = false;
+        slotFull = false;
+    }
 }
