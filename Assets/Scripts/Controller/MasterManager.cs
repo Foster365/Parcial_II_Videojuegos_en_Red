@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class MasterManager : MonoBehaviourPunCallbacks
@@ -79,9 +80,9 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
     #region RPC'S
     [PunRPC]
-    public void RequestConnectPlayer(Player _client, string _clientPrefName)
+    public void RequestConnectPlayer(Player _client, string _clientPrefName, Vector3 _pos, Quaternion _rot)
     {
-        GameObject playerGO = PhotonNetwork.Instantiate("Player_New", Vector3.zero, Quaternion.identity);
+        GameObject playerGO = PhotonNetwork.Instantiate(_clientPrefName, _pos, _rot);
         var character = playerGO.GetComponent<CharacterModel>();
         charactersDictionary[_client] = character;
         clientsDictionary[character] = _client;
@@ -90,14 +91,12 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RequestMove(Player _client, Vector3 _dir) //client: Player who reproduces this rpc. (MasterClient in this case)
+    public void RequestMove(Player _client, float _horizontalInput, float _verticalInput) //client: Player who reproduces this rpc. (MasterClient in this case)
     {
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
-
-            character.Move(_dir);
-            character.LookDir(_dir);
+            character.MovePlayer(_horizontalInput, _verticalInput);
         }
     }
 
@@ -107,19 +106,83 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
+            if (character.ReadyToJump && character.Grounded && (character.jumpsRemaining > 0))
+            {
+                character.ReadyToJump = false;
 
-            character.Jump();
-            //character.LookAt(_dir);
+                character.Jump();
+
+                character.JumpResetHandler();
+                character.jumpsRemaining -= 1;
+            }
         }
     }
 
     [PunRPC]
-    public void RequestTriggerAnimation(Player _client, string _animName)
+    public void RequestStartCrouch(Player _client)
     {
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
-            character.GetComponent<Animator>().SetTrigger(_animName);
+            transform.localScale = new Vector3(transform.localScale.x, character.crouchYScale, transform.localScale.z);
+            character.Rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+    }
+
+    [PunRPC]
+    public void RequestStopCrouch(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var character = charactersDictionary[_client];
+
+            MasterManager.Instance.HandleRPC("RequestStopCrouch", PhotonNetwork.LocalPlayer);
+            transform.localScale = new Vector3(transform.localScale.x, character.StartYScale, transform.localScale.z);
+        }
+    }
+
+    [PunRPC]
+    public void RequestStartSlide(Player _client, float _horizontalInput, float _verticalInput)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var character = charactersDictionary[_client];
+            if (_horizontalInput != 0 || _verticalInput != 0) character.CharacterSlideMovement.StartSlide();
+        }
+    }
+
+    [PunRPC]
+    public void RequestStopSlide(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var character = charactersDictionary[_client];
+            if (character.sliding) character.CharacterSlideMovement.StopSlide();
+        }
+    }
+
+    [PunRPC]
+    public void RequestDash(Player _client)
+    {
+        if (CharactersDictionary.ContainsKey(_client))
+        {
+            var character = charactersDictionary[_client];
+            character.CharacterDash.Dash();
+
+            if (character.CharacterDash.DashCdTimer > 0)
+                character.CharacterDash.DashCdTimer -= Time.deltaTime;
+        }
+    }
+
+    [PunRPC]
+    public void RequestGround(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var character = charactersDictionary[_client];
+            character.Grounded = Physics.Raycast(transform.position, Vector3.down, (character.playerHeight * 0.5f) + 0.2f, character.whatIsGround);
+            //character.Jump();
+            //character.LookAt(_dir);
         }
     }
 
