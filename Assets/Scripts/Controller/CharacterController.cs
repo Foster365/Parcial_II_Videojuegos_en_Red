@@ -15,14 +15,6 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ground check
-        character.Grounded = Physics.Raycast(transform.position, Vector3.down, (character.playerHeight * 0.5f) + 0.2f, character.whatIsGround);
-
-        if (character.Grounded == true)
-        {
-            character.jumpsRemaining = character.maxJumpCount;
-        }
-
         InputHandler();
         character.SpeedControl();
         charMoveStatesHandler.StateHandler();

@@ -47,6 +47,9 @@ public class FullAuthorityController : MonoBehaviourPun
     }
     public void InputHandler()
     {
+
+        MasterManager.Instance.HandleRPC("RequestGround", PhotonNetwork.LocalPlayer);
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 

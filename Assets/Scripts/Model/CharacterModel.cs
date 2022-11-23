@@ -127,6 +127,7 @@ public class CharacterModel : MonoBehaviourPun
         // on ground
         else if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+        //Move(moveDirection.normalized);
 
         // in air
         else if (!grounded)
@@ -134,6 +135,13 @@ public class CharacterModel : MonoBehaviourPun
 
         // turn gravity off while on slope
         rb.useGravity = !OnSlope();
+    }
+    public void Move(Vector3 _dir)
+    {
+        _dir *= moveSpeed;
+        _dir.y = rb.velocity.y;
+        rb.velocity = _dir;
+
     }
     #endregion
 

@@ -180,9 +180,15 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
+
+            // ground check
             character.Grounded = Physics.Raycast(transform.position, Vector3.down, (character.playerHeight * 0.5f) + 0.2f, character.whatIsGround);
-            //character.Jump();
-            //character.LookAt(_dir);
+
+            if (character.Grounded == true)
+            {
+                character.jumpsRemaining = character.maxJumpCount;
+            }
+
         }
     }
 

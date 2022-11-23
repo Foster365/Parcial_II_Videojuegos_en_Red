@@ -689,9 +689,9 @@ GameObject:
   - component: {fileID: 8573750318910227502}
   - component: {fileID: 2745068413564592780}
   - component: {fileID: 4644380713349286440}
+  - component: {fileID: -4714401111825077239}
   - component: {fileID: -1939597804079358854}
   - component: {fileID: -4901145770677312045}
-  - component: {fileID: -4714401111825077239}
   - component: {fileID: 2234817305766466405}
   - component: {fileID: 4814701104289863176}
   - component: {fileID: -65627063896632664}
@@ -846,6 +846,23 @@ MonoBehaviour:
     m_Bits: 8
   maxSlopeAngle: 40
   orientation: {fileID: 7174988716641282}
+--- !u!114 &-4714401111825077239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5988206798461184575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d13b8cf58c33944a747b1f309cca2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 7174988716641282}
+  playerObj: {fileID: 6093011877172866027}
+  maxSlideTime: 0.75
+  slideForce: 50
+  slideYScale: 0.5
 --- !u!114 &-1939597804079358854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,23 +905,6 @@ MonoBehaviour:
   disableGravity: 1
   resetVel: 1
   dashCd: 1.5
---- !u!114 &-4714401111825077239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5988206798461184575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2d13b8cf58c33944a747b1f309cca2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 7174988716641282}
-  playerObj: {fileID: 6093011877172866027}
-  maxSlideTime: 0.75
-  slideForce: 50
-  slideYScale: 0.5
 --- !u!114 &2234817305766466405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1156,7 +1156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7946082594262518773
 Transform:
   m_ObjectHideFlags: 0
