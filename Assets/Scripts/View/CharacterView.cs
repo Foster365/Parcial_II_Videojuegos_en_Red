@@ -46,6 +46,10 @@ public class CharacterView : MonoBehaviourPun
 
     void OnDestroyNick()
     {
-        PhotonNetwork.Destroy(playerNick.gameObject);
+        if(playerNick != null)
+        {
+            PhotonNetwork.Destroy(playerNick.gameObject);
+        }
+        
     }
 }

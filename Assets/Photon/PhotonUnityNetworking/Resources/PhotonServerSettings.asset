@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: a6578323-8381-4cd2-991b-08b553181f93
+    AppIdRealtime: 1133469f-0b3d-458e-b5fb-9fb3895e8009
     AppIdFusion: 
     AppIdChat: 
-    AppIdVoice: 
+    AppIdVoice: 7a4637e9-c6c4-4fe6-a4fe-df6da0647784
     AppVersion: 
     UseNameServer: 1
     FixedRegion: 
@@ -28,34 +28,36 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: sa
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - CantHearYou
+  - ChangeColour
   - ClickRpc
   - DestroyRpc
+  - HeresWhy
+  - ActivateCamaraGIl
   - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
   - Die
+  - Fire
   - HandleRPC
   - RequestBoolAnimation
   - RequestConnectPlayer
+  - RequestDash
+  - RequestGround
   - RequestJump
   - RequestMove
   - RequestNick
-  - RequestTriggerAnimation
-  - UpdateBomb
-  - UpdateNick
-  - ActivateCamaraGIl
-  - RequestDash
-  - RequestGround
   - RequestStartCrouch
   - RequestStartSlide
   - RequestStopCrouch
   - RequestStopSlide
+  - RespawnSpaceship
+  - UpdateBomb
+  - UpdateNick
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
-  DevRegionSetOnce: 1
+  ShowSettings: 1
+  DevRegionSetOnce: 0

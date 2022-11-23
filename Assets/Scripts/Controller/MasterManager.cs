@@ -19,7 +19,6 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
 
     public Dictionary<Player, CharacterModel> CharactersDictionary { get => charactersDictionary; set => charactersDictionary = value; }
-
     private void Awake()
     {
         if (instance != null) Destroy(this);

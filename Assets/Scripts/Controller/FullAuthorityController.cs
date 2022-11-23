@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Voice.PUN;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,8 @@ public class FullAuthorityController : MonoBehaviourPun
     {
         MasterManager.Instance.HandleRPC("RequestConnectPlayer",
             PhotonNetwork.LocalPlayer, "Banana_Man", new Vector3(0, 10, 0), Quaternion.identity);
+        PhotonNetwork.Instantiate("VoiceObject", Vector3.zero, Quaternion.identity);
+        PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled = false;
     }
 
     private void Update()
@@ -47,6 +50,15 @@ public class FullAuthorityController : MonoBehaviourPun
     }
     public void InputHandler()
     {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled=true;
+        }
+        else if (Input.GetKeyUp(KeyCode.V))
+        {
+            PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled=false;
+        }
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
