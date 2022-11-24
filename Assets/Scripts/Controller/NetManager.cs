@@ -13,6 +13,7 @@ public class NetManager : MonoBehaviourPunCallbacks
 
     [SerializeField] TMP_InputField characterNickName;
     [SerializeField] TMP_InputField roomName;
+    [SerializeField] TMP_InputField roomSize;
     [SerializeField] Button btnConnection;
     [SerializeField] TextMeshProUGUI connectionStatus;
     [SerializeField] TextMeshProUGUI playersCount;
@@ -62,11 +63,12 @@ public class NetManager : MonoBehaviourPunCallbacks
     {
         if (string.IsNullOrEmpty(roomName.text) || string.IsNullOrWhiteSpace(roomName.text)) return;
         if (string.IsNullOrEmpty(characterNickName.text) || string.IsNullOrWhiteSpace(characterNickName.text)) return;
+        if (string.IsNullOrEmpty(roomSize.text) || string.IsNullOrWhiteSpace(roomSize.text)) return;
 
         PhotonNetwork.NickName = characterNickName.text;
 
         RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 5;
+        options.MaxPlayers = byte.Parse(roomSize.text);
         options.IsOpen = true;
         options.IsVisible = true;
 
@@ -96,6 +98,8 @@ public class NetManager : MonoBehaviourPunCallbacks
         connectionStatus.text = "Joined room";
 
         PhotonNetwork.LoadLevel("Full_Authority");
+
+        Debug.Log("Max amount of players is: " + PhotonNetwork.CurrentRoom.MaxPlayers + ", and the current amount of players connected is : " + PhotonNetwork.CurrentRoom.PlayerCount);
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {

@@ -824,9 +824,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camPos: {fileID: 7174988716641282}
-  moveSpeed: 15
-  walkSpeed: 10
-  sprintSpeed: 25
+  moveSpeed: 10
+  walkSpeed: 7
+  sprintSpeed: 15
   wallRunSpeed: 10
   dashSpeed: 20
   dashSpeedChangeFactor: 2
@@ -862,7 +862,7 @@ MonoBehaviour:
   orientation: {fileID: 7174988716641282}
   playerObj: {fileID: 6093011877172866027}
   maxSlideTime: 0.75
-  slideForce: 50
+  slideForce: 70
   slideYScale: 0.5
 --- !u!114 &-1939597804079358854
 MonoBehaviour:
@@ -919,11 +919,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 64
   whatIsGround:
     serializedVersion: 2
     m_Bits: 136
-  wallRunForce: 50
+  wallRunForce: 200
   wallJumpUpForce: 15
   wallJumpSideForce: 12
   wallClimbSpeed: 3

@@ -44,14 +44,9 @@ public class DashMovement : MonoBehaviourPun
 
     }
 
-    [PunRPC]
-    public void SetCameraMovementGameObjectValue()
-    {
-
-        //Lo mismo con orientation
-    }
     public void Dash()
     {
+        Debug.Log("Dash Command");
         if (dashCdTimer > 0) return;
         else dashCdTimer = dashCd;
 

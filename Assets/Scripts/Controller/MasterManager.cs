@@ -12,6 +12,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
     static MasterManager instance;
     Vector3 movementDir;
     bool gdd;
+    bool isSprinting;
 
     public static MasterManager Instance
     {
@@ -27,6 +28,13 @@ public class MasterManager : MonoBehaviourPunCallbacks
     {
         if (instance != null) Destroy(this);
         else instance = this;
+
+
+    }
+
+    private void Start()
+    {
+        isSprinting = false;
     }
 
     private void Update()
@@ -48,30 +56,15 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
     }
 
-
-    [PunRPC]
-    public void SetCharacterMovementDirection(Player _client, Vector3 _dir)
+    public void CheckGround(CharacterModel _character)
     {
-        if (charactersDictionary.ContainsKey(_client))
-        {
-            var characterModel = charactersDictionary[_client];
-            charactersMovementDirections[characterModel] = _dir;
-        }
+        gdd = Physics.Raycast(_character.transform.position, -Vector3.up, .1f, 1 << LayerMask.NameToLayer("Ground")) ? true : false;//Physics.Raycast(transform.position, Vector3.down, (_character.playerHeight * 0.5f) + 0.2f, _character.whatIsGround);
+        _character.Grounded = gdd;
+        if (_character.Grounded) _character.jumpsRemaining = _character.maxJumpCount;
+
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (charactersDictionary.ContainsKey(otherPlayer))
-            {
-                var character = charactersDictionary[otherPlayer];
-                RemoveClient(otherPlayer);
-                PhotonNetwork.Destroy(character.gameObject);
-            }
-        }
-    }
-
+    #region Clients/Models Management
     public Player GetClientFromModel(CharacterModel _charModel)
     {
         if (clientsDictionary.ContainsKey(_charModel))
@@ -111,16 +104,32 @@ public class MasterManager : MonoBehaviourPunCallbacks
             clientsDictionary.Remove(characterModel);
         }
     }
-
-    public void CheckGround(CharacterModel _character)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        gdd = Physics.Raycast(_character.transform.position, -Vector3.up, .1f, 1 << LayerMask.NameToLayer("Ground")) ? true : false;//Physics.Raycast(transform.position, Vector3.down, (_character.playerHeight * 0.5f) + 0.2f, _character.whatIsGround);
-        _character.Grounded = gdd;
-        if (_character.Grounded) _character.jumpsRemaining = _character.maxJumpCount;
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (charactersDictionary.ContainsKey(otherPlayer))
+            {
+                var character = charactersDictionary[otherPlayer];
+                RemoveClient(otherPlayer);
+                PhotonNetwork.Destroy(character.gameObject);
+            }
+        }
     }
+    #endregion
 
     #region RPC'S
+
+    [PunRPC]
+    public void SetCharacterMovementDirection(Player _client, Vector3 _dir)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var characterModel = charactersDictionary[_client];
+            charactersMovementDirections[characterModel] = _dir;
+        }
+    }
+
     [PunRPC]
     public void RequestConnectPlayer(Player _client, string _clientPrefName, Vector3 _pos, Quaternion _rot)
     {
@@ -132,10 +141,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
         character.photonView.RPC("ActivateCamaraGIl", _client);
         DashMovement dash = character.gameObject.GetComponent<DashMovement>();
 
-        dash.Cam = character.gameObject.GetComponent<PlayerCameraController>();//transform;
-        Debug.Log("DASH COMP: " + dash);
-        //dash.photonView.RPC("SetCameraMovementGameObjectValue", _client);
-        Debug.Log("Cam: " + dash.Cam);
+        dash.Cam = character.gameObject.GetComponent<PlayerCameraController>();
     }
 
     [PunRPC]
@@ -168,6 +174,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
             var character = charactersDictionary[_client];
             if (character.ReadyToJump && character.Grounded && (character.jumpsRemaining > 0))
             {
+                Debug.Log("Jump Command");
                 character.ReadyToJump = false;
 
                 character.Jump();
@@ -183,6 +190,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
     {
         if (charactersDictionary.ContainsKey(_client))
         {
+            Debug.Log("Start Crouch Command");
             var character = charactersDictionary[_client];
             transform.localScale = new Vector3(transform.localScale.x, character.crouchYScale, transform.localScale.z);
             character.Rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -196,7 +204,8 @@ public class MasterManager : MonoBehaviourPunCallbacks
         {
             var character = charactersDictionary[_client];
 
-            MasterManager.Instance.HandleRPC("RequestStopCrouch", PhotonNetwork.LocalPlayer);
+            Debug.Log("Stop Crouch Command");
+            //MasterManager.Instance.HandleRPC("RequestStopCrouch", PhotonNetwork.LocalPlayer);
             transform.localScale = new Vector3(transform.localScale.x, character.StartYScale, transform.localScale.z);
         }
     }
@@ -207,8 +216,11 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
-            Debug.Log("Horiz: " + _horizontalInput + "Vertic: " + _verticalInput + "Character Slide: " + character.CharacterSlideMovement);
-            if (_horizontalInput != 0 || _verticalInput != 0) character.CharacterSlideMovement.StartSlide();
+            if (_horizontalInput != 0 || _verticalInput != 0)
+            {
+                Debug.Log("Start Slide Command");
+                character.CharacterSlideMovement.StartSlide();
+            }
         }
     }
 
@@ -218,7 +230,11 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
-            if (character.sliding) character.CharacterSlideMovement.StopSlide();
+            if (character.sliding)
+            {
+                Debug.Log("Stop Slide Command");
+                character.CharacterSlideMovement.StopSlide();
+            }
         }
     }
 

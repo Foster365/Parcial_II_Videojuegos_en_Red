@@ -10,18 +10,21 @@ public class InputFieldHandler : MonoBehaviourPun
 {
     [SerializeField] TMP_InputField characterNickName;
     [SerializeField] TMP_InputField roomName;
+    [SerializeField] TMP_InputField roomSize;
     public const string playerNamePrefKey = "Nickname_Pref_Key";
     public const string roomNamePrefKey = "Room_Pref_Key";
+    public const string roomSizePrefKey = "Room_Size_Pref_Key";
 
     public TMP_InputField CharacterNickName { get => characterNickName; set => characterNickName = value; }
     public TMP_InputField RoomName { get => roomName; set => roomName = value; }
+    public TMP_InputField RoomSize { get => roomSize; set => roomSize = value; }
 
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            //SetPlayerInputName();
-            //SetRoomInputName();
+            SetPlayerInputName();
+            SetRoomInputName();
 
         }
     }
@@ -50,23 +53,32 @@ public class InputFieldHandler : MonoBehaviourPun
         // #Important
         if (string.IsNullOrEmpty(characterNickName.text))
         {
-            Debug.LogError("Player Name is null or empty");
             return;
         }
-        //PlayerPrefs.SetString(playerNamePrefKey, characterNickName.text);
+        PlayerPrefs.SetString(playerNamePrefKey, characterNickName.text);
     }
 
     public void SetRoomInputName()
     {
 
         PlayerPrefs.SetString(roomNamePrefKey, roomName.text);
-        Debug.Log("Room Pref name: " + PlayerPrefs.GetString(roomNamePrefKey));
         // #Important
         if (string.IsNullOrEmpty(roomName.text))
         {
-            Debug.LogError("Room Name is null or empty");
             return;
         }
-        //PlayerPrefs.SetString(roomNamePrefKey, roomName.text);
+        PlayerPrefs.SetString(roomNamePrefKey, roomName.text);
     }
+    //public void SetRoomSizeInputName()
+    //{
+    //    //PlayerPrefs.SetString(roomSizePrefKey, roomSize.text);
+    //    PhotonNetwork.CurrentRoom.MaxPlayers = byte.Parse(roomSize.text);
+    //    // #Important
+    //    if (string.IsNullOrEmpty(roomSize.text))
+    //    {
+    //        return;
+    //    }
+    //    //PlayerPrefs.SetString(roomSizePrefKey, roomSize.text);
+    //}
+
 }

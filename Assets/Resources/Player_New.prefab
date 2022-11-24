@@ -242,7 +242,7 @@ MonoBehaviour:
   jumpsRemaining: 0
   crouchSpeed: 3.5
   crouchYScale: 0.5
-  startYScale: 0
+  startYScale: 1
   sliding: 0
   jumpKey: 32
   sprintKey: 304
@@ -291,7 +291,6 @@ MonoBehaviour:
   dashUpwardForce: 1
   maxDashYSpeed: 15
   dashDuration: 0.25
-  cam: {fileID: 0}
   dashFov: 95
   useCameraForward: 1
   allowAllDirections: 1

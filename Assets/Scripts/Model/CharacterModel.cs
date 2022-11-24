@@ -89,6 +89,7 @@ public class CharacterModel : MonoBehaviourPun
         charAnimations = GetComponent<CharacterAnimations>();
         charMoveStatesHandler = GetComponent<CharacterMovementStatesHandler>();
         characterDash = GetComponent<DashMovement>();
+        CharacterSlideMovement = GetComponent<SlideMovement>();
     }
 
     private void Start()
@@ -121,6 +122,7 @@ public class CharacterModel : MonoBehaviourPun
 
         // calculate movement direction
         moveDirection = ((orientation.forward * _verticalInput) + (orientation.right * _horizontalInput)).normalized;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * 40f);
         SpeedControl();
         // on slope
         if (OnSlope() && !exitingSlope)
@@ -146,12 +148,16 @@ public class CharacterModel : MonoBehaviourPun
         // turn gravity off while on slope
         rb.useGravity = !OnSlope();
     }
-    public void Move(Vector3 _dir)
-    {
-        _dir *= moveSpeed;
-        _dir.y = rb.velocity.y;
-        rb.velocity = _dir;
+    //public void Move(Vector3 _dir)
+    //{
+    //    _dir *= moveSpeed;
+    //    _dir.y = rb.velocity.y;
+    //    rb.velocity = _dir;
 
+    //}
+
+    public void Sprint()
+    {
     }
     #endregion
 
@@ -220,15 +226,15 @@ public class CharacterModel : MonoBehaviourPun
 
         return velocityXZ + velocityY;
     }
-    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
-    {
-        charMoveStatesHandler.activeGrapple = true;
+    //public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    //{
+    //    charMoveStatesHandler.activeGrapple = true;
 
-        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
-        Invoke(nameof(SetVelocity), 0.1f);
+    //    velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+    //    Invoke(nameof(SetVelocity), 0.1f);
 
-        Invoke(nameof(ResetRestrictions), 3f);
-    }
+    //    Invoke(nameof(ResetRestrictions), 3f);
+    //}
     #endregion
 
     #region Slopes Movement Handling

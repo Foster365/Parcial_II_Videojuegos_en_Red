@@ -22,7 +22,6 @@ public class CharacterView : MonoBehaviourPun
             var charModel = GetComponent<CharacterModel>();
             var characterClient = MasterManager.Instance.GetClientFromModel(charModel);
             var nick = characterClient.NickName;
-            Debug.Log("NICK IS: " + nick);
             UpdateNick(nick);
         }
         else photonView.RPC("RequestNick", photonView.Owner, PhotonNetwork.LocalPlayer);
@@ -34,7 +33,6 @@ public class CharacterView : MonoBehaviourPun
         var charModel = GetComponent<CharacterModel>();
         var characterClient = MasterManager.Instance.GetClientFromModel(charModel);
         var nick = characterClient.NickName;
-        Debug.Log("NICK IS (Not MasterClient instance): " + nick);
         photonView.RPC("UpdateNick", player, nick);
     }
 

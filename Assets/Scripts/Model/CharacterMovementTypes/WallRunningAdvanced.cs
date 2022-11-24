@@ -43,7 +43,7 @@ public class WallRunningAdvanced : MonoBehaviour
     [Header("References")]
     public Transform orientation;
     public PlayerCameraController cam;
-    private Character pm;
+    private CharacterModel pm;
     private Rigidbody rb;
 
     //Components attached to Character
@@ -56,6 +56,7 @@ public class WallRunningAdvanced : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cam = GetComponent<PlayerCameraController>();
         //pm = GetComponent<PlayerMovementAdvanced>();
     }
 

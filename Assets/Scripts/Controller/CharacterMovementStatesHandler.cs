@@ -28,7 +28,8 @@ public class CharacterMovementStatesHandler : MonoBehaviourPun
     private MovementState lastState;
     private bool keepMomentum;
 
-    Character playerMovement;
+    CharacterModel playerMovement;
+    FullAuthorityController fullAuthController;
 
     public float DesiredMoveSpeed { get => desiredMoveSpeed; set => desiredMoveSpeed = value; }
     public bool KeepMomentum { get => keepMomentum; set => keepMomentum = value; }
@@ -37,7 +38,8 @@ public class CharacterMovementStatesHandler : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            playerMovement = GetComponent<Character>();
+            playerMovement = GetComponent<CharacterModel>();
+            fullAuthController = GameObject.Find("Full Authority Controller").gameObject.GetComponent<FullAuthorityController>();
         }
     }
 
@@ -65,14 +67,14 @@ public class CharacterMovementStatesHandler : MonoBehaviourPun
         }
 
         // Mode - Crouching
-        else if (Input.GetKey(playerMovement.crouchKey))
+        else if (Input.GetKey(fullAuthController.crouchKey))
         {
             state = MovementState.crouching;
             desiredMoveSpeed = playerMovement.crouchSpeed;
         }
 
         // Mode - Sprinting
-        else if (playerMovement.Grounded && Input.GetKey(playerMovement.sprintKey))
+        else if (playerMovement.Grounded && Input.GetKey(fullAuthController.sprintKey))
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = playerMovement.sprintSpeed;
