@@ -1,14 +1,19 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Transform camPos;
+    Transform camPos;
 
-    // Update is called once per frame
+    public Transform CamPos { get => camPos; set => camPos = value; }
+
     void Update()
     {
+
         transform.position = camPos.position;
+        transform.rotation = camPos.rotation;
+
     }
 }

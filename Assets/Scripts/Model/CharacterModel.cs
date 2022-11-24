@@ -108,7 +108,7 @@ public class CharacterModel : MonoBehaviourPun
     [PunRPC]
     public void ActivateCamaraGIl()
     {
-        GameObject.FindObjectOfType<CameraMovement>().camPos = camPos;//transform;
+        GameObject.FindObjectOfType<CameraMovement>().CamPos = camPos;//transform;
 
         //Lo mismo con orientation
     }

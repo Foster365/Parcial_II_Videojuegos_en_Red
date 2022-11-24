@@ -20,8 +20,6 @@ public class FullAuthorityController : MonoBehaviourPun
     float horizontalInput;
     float verticalInput;
 
-    CharacterModel character;
-
     Vector3 lastDir;
     // Start is called before the first frame update
 
