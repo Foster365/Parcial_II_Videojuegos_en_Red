@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         int playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (PhotonNetwork.IsMasterClient && !isGameStarted && playersCount > PhotonNetwork.CurrentRoom.MaxPlayers) //> mínimo de players, >= playerCount -1 (Mínimo de players, descontando al MasterClient)
+        if (PhotonNetwork.IsMasterClient && !isGameStarted && playersCount > 2) //> mínimo de players, >= playerCount -1 (Mínimo de players, descontando al MasterClient)
         {
             Debug.Log("Starting game");
             isGameStarted = true;

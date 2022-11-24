@@ -15,8 +15,8 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: a6578323-8381-4cd2-991b-08b553181f93
     AppIdFusion: 
-    AppIdChat: 
-    AppIdVoice: 
+    AppIdChat: 4f520c75-47e2-48b0-8b09-9ffb0f5d440f
+    AppIdVoice: 1133469f-0b3d-458e-b5fb-9fb3895e8009
     AppVersion: 
     UseNameServer: 1
     FixedRegion: 
@@ -34,38 +34,37 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - CantHearYou
+  - ChangeColour
   - ClickRpc
   - DestroyRpc
+  - HeresWhy
+  - ActivateCamaraGIl
   - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
   - Die
+  - Fire
   - HandleRPC
+  - LoadGameOverScene
+  - LoadWinScene
   - RequestBoolAnimation
   - RequestConnectPlayer
+  - RequestDash
   - RequestJump
   - RequestMove
+  - RequestMovementDir
   - RequestNick
-  - RequestTriggerAnimation
-  - UpdateBomb
-  - UpdateNick
-  - ActivateCamaraGIl
-  - RequestDash
-  - RequestGround
   - RequestStartCrouch
   - RequestStartSlide
   - RequestStopCrouch
   - RequestStopSlide
-  - RequestMovementDir
-  - SetCharacterMovementDirection
-  - SetCameraMovementGameObjectValue
+  - RespawnSpaceship
   - SetCameraControllerRotation
-  - SetCameraOrientation
-  - LoadGameOverScene
-  - LoadWinScene
+  - SetCharacterMovementDirection
   - SetGameOnBoolean
   - StartGameInitCountdown
   - StartGameTimer
+  - UpdateBomb
+  - UpdateNick
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1
