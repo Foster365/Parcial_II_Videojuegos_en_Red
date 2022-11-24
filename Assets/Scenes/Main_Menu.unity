@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 183566288}
   - component: {fileID: 183566287}
   m_Layer: 5
-  m_Name: Voice_Mgr
+  m_Name: VoiceManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1509,7 +1509,7 @@ GameObject:
   - component: {fileID: 759467415}
   - component: {fileID: 759467414}
   m_Layer: 5
-  m_Name: Devices
+  m_Name: Dropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
