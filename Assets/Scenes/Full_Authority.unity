@@ -2603,7 +2603,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2612,10 +2612,10 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_Strength: 0.13
+    m_Bias: 0
+    m_NormalBias: 0.59
+    m_NearPlane: 0.81
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -3456,7 +3456,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 836c3c680fd20524bba260fd4b2aab68, type: 3}
   m_Name: 
@@ -7922,7 +7922,7 @@ PrefabInstance:
     - target: {fileID: 324372792595262871, guid: 38144c42f08717745bb2e8d75969dc7b, type: 3}
       propertyPath: cam
       value: 
-      objectReference: {fileID: 963194229}
+      objectReference: {fileID: 0}
     - target: {fileID: 324372792595262871, guid: 38144c42f08717745bb2e8d75969dc7b, type: 3}
       propertyPath: wallJumpUpForce
       value: 15
@@ -7950,7 +7950,7 @@ PrefabInstance:
     - target: {fileID: 8205150843493077636, guid: 38144c42f08717745bb2e8d75969dc7b, type: 3}
       propertyPath: cam
       value: 
-      objectReference: {fileID: 963194229}
+      objectReference: {fileID: 0}
     - target: {fileID: 8205150843493077636, guid: 38144c42f08717745bb2e8d75969dc7b, type: 3}
       propertyPath: playerCam
       value: 

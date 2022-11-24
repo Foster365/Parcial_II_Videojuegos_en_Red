@@ -1,7 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class MasterManager : MonoBehaviourPunCallbacks
@@ -9,7 +8,11 @@ public class MasterManager : MonoBehaviourPunCallbacks
     GameManager gameMgr;
     Dictionary<Player, CharacterModel> charactersDictionary = new Dictionary<Player, CharacterModel>();
     Dictionary<CharacterModel, Player> clientsDictionary = new Dictionary<CharacterModel, Player>();
+    Dictionary<CharacterModel, Vector3> charactersMovementDirections = new Dictionary<CharacterModel, Vector3>();
     static MasterManager instance;
+    Vector3 movementDir;
+    bool gdd;
+
     public static MasterManager Instance
     {
         get
@@ -25,6 +28,37 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (instance != null) Destroy(this);
         else instance = this;
     }
+
+    private void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+            foreach (var c in charactersDictionary)
+            {
+                CharacterModel charModel = c.Value;
+                CheckGround(charModel);
+                if (charactersMovementDirections.ContainsKey(charModel))
+                {
+                    var dir = charactersMovementDirections[charModel];
+                    charModel.MovePlayer(dir.x, dir.z);
+                }
+            }
+        }
+
+    }
+
+
+    [PunRPC]
+    public void SetCharacterMovementDirection(Player _client, Vector3 _dir)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var characterModel = charactersDictionary[_client];
+            charactersMovementDirections[characterModel] = _dir;
+        }
+    }
+
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (PhotonNetwork.IsMasterClient)
@@ -78,6 +112,14 @@ public class MasterManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void CheckGround(CharacterModel _character)
+    {
+        gdd = Physics.Raycast(_character.transform.position, -Vector3.up, .1f, 1 << LayerMask.NameToLayer("Ground")) ? true : false;//Physics.Raycast(transform.position, Vector3.down, (_character.playerHeight * 0.5f) + 0.2f, _character.whatIsGround);
+        _character.Grounded = gdd;
+        if (_character.Grounded) _character.jumpsRemaining = _character.maxJumpCount;
+
+    }
+
     #region RPC'S
     [PunRPC]
     public void RequestConnectPlayer(Player _client, string _clientPrefName, Vector3 _pos, Quaternion _rot)
@@ -88,6 +130,24 @@ public class MasterManager : MonoBehaviourPunCallbacks
         clientsDictionary[character] = _client;
         if (gameMgr != null) gameMgr.SetManager(character);
         character.photonView.RPC("ActivateCamaraGIl", _client);
+        DashMovement dash = character.gameObject.GetComponent<DashMovement>();
+
+        dash.Cam = character.gameObject.GetComponent<PlayerCameraController>();//transform;
+        Debug.Log("DASH COMP: " + dash);
+        //dash.photonView.RPC("SetCameraMovementGameObjectValue", _client);
+        Debug.Log("Cam: " + dash.Cam);
+    }
+
+    [PunRPC]
+    public void RequestMovementDir(Player _client, Vector3 _dir)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var character = charactersDictionary[_client];
+
+            movementDir = _dir;
+
+        }
     }
 
     [PunRPC]
@@ -147,6 +207,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
+            Debug.Log("Horiz: " + _horizontalInput + "Vertic: " + _verticalInput + "Character Slide: " + character.CharacterSlideMovement);
             if (_horizontalInput != 0 || _verticalInput != 0) character.CharacterSlideMovement.StartSlide();
         }
     }
@@ -171,24 +232,6 @@ public class MasterManager : MonoBehaviourPunCallbacks
 
             if (character.CharacterDash.DashCdTimer > 0)
                 character.CharacterDash.DashCdTimer -= Time.deltaTime;
-        }
-    }
-
-    [PunRPC]
-    public void RequestGround(Player _client)
-    {
-        if (charactersDictionary.ContainsKey(_client))
-        {
-            var character = charactersDictionary[_client];
-
-            // ground check
-            character.Grounded = Physics.Raycast(transform.position, Vector3.down, (character.playerHeight * 0.5f) + 0.2f, character.whatIsGround);
-
-            if (character.Grounded == true)
-            {
-                character.jumpsRemaining = character.maxJumpCount;
-            }
-
         }
     }
 

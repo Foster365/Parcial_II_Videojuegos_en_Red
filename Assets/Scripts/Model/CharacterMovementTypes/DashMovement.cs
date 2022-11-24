@@ -1,14 +1,15 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashMovement : MonoBehaviour
+public class DashMovement : MonoBehaviourPun
 {
     [Header("References")]
     public Transform orientation;
     public Transform playerCam;
     private Rigidbody rb;
-    Character pm;
+    CharacterModel pm;
 
     [Header("Dashing")]
     public float dashForce;
@@ -17,7 +18,7 @@ public class DashMovement : MonoBehaviour
     public float dashDuration;
 
     [Header("CameraEffects")]
-    public PlayerCameraController cam;
+    private PlayerCameraController cam;
     public float dashFov;
 
     [Header("Settings")]
@@ -38,20 +39,17 @@ public class DashMovement : MonoBehaviour
 
         //Components attached to Character
         charMoveStatesHandler = GetComponent<CharacterMovementStatesHandler>();
-
-    }
-
-    private void Start()
-    {
         rb = GetComponent<Rigidbody>();
-        pm = GetComponent<Character>();
+        pm = GetComponent<CharacterModel>();
+
     }
 
-    private void Update()
+    [PunRPC]
+    public void SetCameraMovementGameObjectValue()
     {
 
+        //Lo mismo con orientation
     }
-
     public void Dash()
     {
         if (dashCdTimer > 0) return;
@@ -85,6 +83,7 @@ public class DashMovement : MonoBehaviour
     private Vector3 delayedForceToApply;
 
     public float DashCdTimer { get => dashCdTimer; set => dashCdTimer = value; }
+    public PlayerCameraController Cam { get => cam; set => cam = value; }
 
     private void DelayedDashForce()
     {

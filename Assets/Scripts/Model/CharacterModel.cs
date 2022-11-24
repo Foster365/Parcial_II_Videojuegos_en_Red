@@ -19,7 +19,8 @@ public class CharacterModel : MonoBehaviourPun
     public float sprintSpeed;
     public float wallRunSpeed;
 
-    public float dashSpeed, dashSpeedChangeFactor;
+    public float dashSpeed;
+    public float dashSpeedChangeFactor;
 
     public float maxYSpeed;
 
@@ -27,12 +28,17 @@ public class CharacterModel : MonoBehaviourPun
     float speedChangeFactor;
 
     [Header("Jumping")]
-    public float jumpForce, jumpCooldown, airMultiplier;
-    public int maxJumpCount = 2, jumpsRemaining = 0;
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    public int maxJumpCount = 2;
+    public int jumpsRemaining = 0;
     bool readyToJump;
 
     [Header("Crouching")]
-    public float crouchSpeed, crouchYScale, startYScale;
+    public float crouchSpeed;
+    public float crouchYScale;
+    public float startYScale;
     public bool sliding;
 
 
@@ -103,6 +109,7 @@ public class CharacterModel : MonoBehaviourPun
     public void ActivateCamaraGIl()
     {
         GameObject.FindObjectOfType<CameraMovement>().camPos = camPos;//transform;
+
         //Lo mismo con orientation
     }
 
@@ -114,7 +121,7 @@ public class CharacterModel : MonoBehaviourPun
 
         // calculate movement direction
         moveDirection = ((orientation.forward * _verticalInput) + (orientation.right * _horizontalInput)).normalized;
-
+        SpeedControl();
         // on slope
         if (OnSlope() && !exitingSlope)
         {
@@ -126,7 +133,10 @@ public class CharacterModel : MonoBehaviourPun
 
         // on ground
         else if (grounded)
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+        }
+        //rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
         //Move(moveDirection.normalized);
 
         // in air

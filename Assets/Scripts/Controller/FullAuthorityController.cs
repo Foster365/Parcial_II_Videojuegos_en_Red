@@ -20,6 +20,9 @@ public class FullAuthorityController : MonoBehaviourPun
     float horizontalInput;
     float verticalInput;
 
+    CharacterModel character;
+
+    Vector3 lastDir;
     // Start is called before the first frame update
 
     private void Awake()
@@ -34,10 +37,13 @@ public class FullAuthorityController : MonoBehaviourPun
     {
         MasterManager.Instance.HandleRPC("RequestConnectPlayer",
             PhotonNetwork.LocalPlayer, "Banana_Man", new Vector3(0, 10, 0), Quaternion.identity);
+        lastDir = Vector3.zero;
+        //character = GameObject.Find("Banana_Man(Clone)").gameObject.GetComponent<CharacterModel>();
     }
 
     private void Update()
     {
+        //MasterManager.Instance.HandleRPC("RequestGround", PhotonNetwork.LocalPlayer);
         InputHandler();
     }
 
@@ -48,26 +54,23 @@ public class FullAuthorityController : MonoBehaviourPun
     public void InputHandler()
     {
 
-        MasterManager.Instance.HandleRPC("RequestGround", PhotonNetwork.LocalPlayer);
-
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         Vector3 dir = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-        if (dir != Vector3.zero) HandleMovementInput(horizontalInput, verticalInput);
+        if (dir != lastDir)
+        {
+            MasterManager.Instance.HandleRPC("SetCharacterMovementDirection", PhotonNetwork.LocalPlayer, dir);
+            lastDir = dir;
+        }
+
         HandleJumpInput();
         HandleCrouchInputs();
         HandleDashInputs();
         HandleSlideInputs();
     }
     #region Movement Input Handlers
-
-    void HandleMovementInput(float _horizontal, float _vertical)
-    {
-        MasterManager.Instance.HandleRPC("RequestMove", PhotonNetwork.LocalPlayer, _horizontal, _vertical);
-    }
-
     void HandleJumpInput()
     {
 

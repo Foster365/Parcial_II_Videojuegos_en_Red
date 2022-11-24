@@ -696,9 +696,10 @@ GameObject:
   - component: {fileID: 4814701104289863176}
   - component: {fileID: -65627063896632664}
   - component: {fileID: 4719078645757118815}
+  - component: {fileID: -8462574592893463270}
   m_Layer: 0
   m_Name: Banana_Man
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -823,9 +824,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camPos: {fileID: 7174988716641282}
-  moveSpeed: 12
-  walkSpeed: 8
-  sprintSpeed: 15
+  moveSpeed: 15
+  walkSpeed: 10
+  sprintSpeed: 25
   wallRunSpeed: 10
   dashSpeed: 20
   dashSpeedChangeFactor: 2
@@ -840,7 +841,7 @@ MonoBehaviour:
   crouchYScale: 0.5
   startYScale: 1
   sliding: 0
-  playerHeight: 4
+  playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -898,7 +899,6 @@ MonoBehaviour:
   dashUpwardForce: 1
   maxDashYSpeed: 15
   dashDuration: 0.25
-  cam: {fileID: 0}
   dashFov: 95
   useCameraForward: 1
   allowAllDirections: 1
@@ -1009,6 +1009,22 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &-8462574592893463270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5988206798461184575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836c3c680fd20524bba260fd4b2aab68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensX: 400
+  sensY: 400
+  orientation: {fileID: 7174988716641282}
+  camHolder: {fileID: 7174988716641282}
 --- !u!1 &6392642354500388831
 GameObject:
   m_ObjectHideFlags: 0

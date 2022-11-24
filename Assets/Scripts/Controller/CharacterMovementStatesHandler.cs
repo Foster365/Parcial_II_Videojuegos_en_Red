@@ -1,8 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class CharacterMovementStatesHandler : MonoBehaviour
+public class CharacterMovementStatesHandler : MonoBehaviourPun
 {
     public MovementState state;
     public enum MovementState
@@ -33,7 +35,10 @@ public class CharacterMovementStatesHandler : MonoBehaviour
 
     private void Awake()
     {
-        playerMovement = GetComponent<Character>();
+        if (photonView.IsMine)
+        {
+            playerMovement = GetComponent<Character>();
+        }
     }
 
     public void StateHandler()
