@@ -38,6 +38,7 @@ public class FullAuthorityController : MonoBehaviourPun
             PhotonNetwork.LocalPlayer, "Banana_Man", new Vector3(0, 10, 0), Quaternion.identity);
         lastDir = Vector3.zero;
         PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled = false;
+        PhotonNetwork.Instantiate("VoiceObject", Vector3.zero, Quaternion.identity);
         //character = GameObject.Find("Banana_Man(Clone)").gameObject.GetComponent<CharacterModel>();
     }
 
@@ -53,8 +54,14 @@ public class FullAuthorityController : MonoBehaviourPun
     }
     public void InputHandler()
     {
-        if (Input.GetKeyDown(KeyCode.V)) PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled = true;
-        else if (Input.GetKeyUp(KeyCode.V)) PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled = false;
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.V))
+        {
+            PunVoiceClient.Instance.PrimaryRecorder.TransmitEnabled = false;
+        }
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
