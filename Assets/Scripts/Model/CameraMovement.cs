@@ -11,9 +11,10 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-
-        transform.position = camPos.position;
-        transform.rotation = camPos.rotation;
-
+        if (camPos)
+        {
+            transform.position = camPos.position;
+            transform.rotation = camPos.rotation;
+        }
     }
 }
