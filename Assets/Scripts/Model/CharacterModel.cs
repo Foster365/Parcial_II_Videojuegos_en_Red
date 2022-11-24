@@ -66,9 +66,10 @@ public class CharacterModel : MonoBehaviourPun
     SlideMovement characterSlideMovement;
     Grapple characterGrapple;
     Rigidbody rb;
-
+    CameraMovement camMovement;
     CharacterAnimations charAnimations;
     GameManager characterGameManager;
+    PlayerCameraController camController;
 
     #region Encapsulated variables
     public Rigidbody Rb { get => rb; set => rb = value; }
@@ -94,6 +95,7 @@ public class CharacterModel : MonoBehaviourPun
 
     private void Start()
     {
+
         rb.freezeRotation = true;
         readyToJump = true;
         startYScale = transform.localScale.y;
@@ -106,11 +108,18 @@ public class CharacterModel : MonoBehaviourPun
             characterGameManager = value;
         }
     }
+
+    public void HandleCameraValue()
+    {
+    }
+
     [PunRPC]
     public void ActivateCamaraGIl()
     {
-        GameObject.FindObjectOfType<CameraMovement>().CamPos = camPos;//transform;
-
+        camMovement = GameObject.FindObjectOfType<CameraMovement>();//transform;
+        camMovement.CamPos = camPos;
+        //GameObject.FindObjectOfType<CameraMovement>().CamHolder = camPos;
+        //GameObject.FindObjectOfType<CameraMovement>().Orientation = camPos;
         //Lo mismo con orientation
     }
 
@@ -118,11 +127,13 @@ public class CharacterModel : MonoBehaviourPun
 
     public void MovePlayer(float _horizontalInput, float _verticalInput)
     {
+        if (camMovement) camMovement.CamPos = camPos;
+        //photonView.RPC("ActivateCamaraGIl", PhotonNetwork.MasterClient, PhotonNetwork.LocalPlayer);
         if (charMoveStatesHandler.state == CharacterMovementStatesHandler.MovementState.dashing) return;
 
         // calculate movement direction
         moveDirection = ((orientation.forward * _verticalInput) + (orientation.right * _horizontalInput)).normalized;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * 40f);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * 40f);
         SpeedControl();
         // on slope
         if (OnSlope() && !exitingSlope)

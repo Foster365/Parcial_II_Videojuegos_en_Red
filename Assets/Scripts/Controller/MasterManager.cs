@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using TMPro.Examples;
 using UnityEngine;
 
 public class MasterManager : MonoBehaviourPunCallbacks
@@ -46,6 +47,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
             {
                 CharacterModel charModel = c.Value;
                 CheckGround(charModel);
+                //charModel.HandleCameraValue();
                 if (charactersMovementDirections.ContainsKey(charModel))
                 {
                     var dir = charactersMovementDirections[charModel];
@@ -119,7 +121,14 @@ public class MasterManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region RPC'S
-
+    [PunRPC]
+    public void SetCameraControllerRotation(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            var characterModel = charactersDictionary[_client];
+        }
+    }
     [PunRPC]
     public void SetCharacterMovementDirection(Player _client, Vector3 _dir)
     {

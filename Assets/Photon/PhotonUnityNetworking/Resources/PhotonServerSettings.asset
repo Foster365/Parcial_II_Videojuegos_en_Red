@@ -59,6 +59,13 @@ MonoBehaviour:
   - RequestMovementDir
   - SetCharacterMovementDirection
   - SetCameraMovementGameObjectValue
+  - SetCameraControllerRotation
+  - SetCameraOrientation
+  - LoadGameOverScene
+  - LoadWinScene
+  - SetGameOnBoolean
+  - StartGameInitCountdown
+  - StartGameTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
