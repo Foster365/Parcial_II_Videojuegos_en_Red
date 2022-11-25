@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Grenade : MonoBehaviourPun
 {
@@ -35,7 +36,13 @@ public class Grenade : MonoBehaviourPun
             }
             Debug.Log(hit.name);
         }
-        MasterManager.Instance.HandleRPC("InstantiateGrenadeFBX", explosionPos);
-        if (MasterManager.Instance.IsOkToDestroyGrenade) Destroy(gameObject);
+        InstantiateFBX(explosionPos);
+        //MasterManager.Instance.HandleRPC("InstantiateGrenadeFBX", explosionPos);
+        Destroy(gameObject);
+    }
+
+    void InstantiateFBX(Vector3 _position)
+    {
+        Instantiate(effect, _position, Quaternion.identity);
     }
 }

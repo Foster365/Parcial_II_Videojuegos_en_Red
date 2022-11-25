@@ -134,8 +134,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         var bomb = obj.GetComponent<Bomb>();
         _bomb = bomb;
         _bomb.SetRandomTarget();
-        Debug.Log("Game Starts!"); //Lo que se puede hacer acá es habilitar el movimiento
-                                   //de los personajes, y empezar a correr el timer, etc.
+        Debug.Log("Game Starts!");
     }
     #endregion
 
