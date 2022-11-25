@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.InRoom && !PhotonNetwork.IsConnected)
         {
-            Debug.Log("Quitting");
+            Debug.Log("Quitting game");
             Application.Quit();
         }
     }
