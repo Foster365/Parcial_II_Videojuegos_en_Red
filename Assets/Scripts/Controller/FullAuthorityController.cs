@@ -21,6 +21,10 @@ public class FullAuthorityController : MonoBehaviourPun
     float horizontalInput;
     float verticalInput;
 
+    Animator animator;
+
+    float moveSpeed = 5f;
+
     Vector3 lastDir;
     // Start is called before the first frame update
 
@@ -34,6 +38,7 @@ public class FullAuthorityController : MonoBehaviourPun
     }
     void Start()
     {
+        animator = GetComponent<Animator>();
         MasterManager.Instance.HandleRPC("RequestConnectPlayer",
             PhotonNetwork.LocalPlayer, "Banana_Man", new Vector3(0, 10, 0), Quaternion.identity);
         lastDir = Vector3.zero;
@@ -67,6 +72,7 @@ public class FullAuthorityController : MonoBehaviourPun
         verticalInput = Input.GetAxisRaw("Vertical");
 
         Vector3 dir = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        //Vector3 dir = (transform.forward * verticalInput + transform.right * horizontalInput) * moveSpeed * Time.deltaTime;
 
         if (dir != lastDir)
         {

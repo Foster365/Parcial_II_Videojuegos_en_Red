@@ -53,6 +53,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
                 CharacterModel charModel = c.Value;
                 CheckGround(charModel);
                 //charModel.HandleCameraValue();
+                //HandleAnims(dir);
                 if (charactersMovementDirections.ContainsKey(charModel))
                 {
                     var dir = charactersMovementDirections[charModel];
@@ -68,6 +69,18 @@ public class MasterManager : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateGameTimer", RpcTarget.Others);
     }
 
+    void HandleAnims(Vector3 dir)
+    {
+        if (dir != Vector3.zero)
+        {
+            //animator.SetBool("isWalking", true);
+            //Debug.Log("aaanimator");
+        }
+        else
+        {
+            //animator.SetBool("isWalking", false);
+        }
+    }
 
     public void CheckGround(CharacterModel _character)
     {

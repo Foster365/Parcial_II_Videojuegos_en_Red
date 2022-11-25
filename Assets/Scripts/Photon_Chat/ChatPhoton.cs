@@ -27,6 +27,11 @@ public class ChatPhoton : MonoBehaviour, IChatClientListener
     private void Update()
     {
         _chatClient.Service();
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            inputField.ActivateInputField();
+        }
     }
 
     public void ChatSendMessage()
