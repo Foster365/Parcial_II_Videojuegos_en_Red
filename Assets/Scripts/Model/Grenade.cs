@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour
+public class Grenade : MonoBehaviourPun
 {
     public float delay = .5f;
 
@@ -34,7 +35,7 @@ public class Grenade : MonoBehaviour
             }
             Debug.Log(hit.name);
         }
-        Instantiate(effect, transform.position, transform.rotation);
-        Destroy(gameObject);
+        MasterManager.Instance.HandleRPC("InstantiateGrenadeFBX", explosionPos);
+        if (MasterManager.Instance.IsOkToDestroyGrenade) Destroy(gameObject);
     }
 }

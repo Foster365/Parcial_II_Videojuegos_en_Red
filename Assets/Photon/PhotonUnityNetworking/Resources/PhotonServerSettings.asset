@@ -71,6 +71,8 @@ MonoBehaviour:
   - DropLauncher
   - SpawnGrenade
   - ResetSpawnGrenadeBoolean
+  - DestroyGrenade
+  - InstantiateGrenadeFBX
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

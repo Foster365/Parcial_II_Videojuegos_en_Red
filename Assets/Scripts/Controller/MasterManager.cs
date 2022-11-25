@@ -19,8 +19,8 @@ public class MasterManager : MonoBehaviourPunCallbacks
     bool gdd;
     bool isSprinting;
     float timeLeft;
-    bool isOkToEquipLauncher;
-    bool isOkToDestroyLauncher;
+    //bool isOkToEquipLauncher;
+    //bool isOkToDestroyLauncher;
     bool isOkToSpawnGrenade, isOkToDestroyGrenade;
 
     public static MasterManager Instance
@@ -32,8 +32,8 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
 
     public Dictionary<Player, CharacterModel> CharactersDictionary { get => charactersDictionary; set => charactersDictionary = value; }
-    public bool IsOkToEquipLauncher { get => isOkToEquipLauncher; set => isOkToEquipLauncher = value; }
-    public bool IsOkToDestroyLauncher { get => isOkToDestroyLauncher; set => isOkToDestroyLauncher = value; }
+    //public bool IsOkToEquipLauncher { get => isOkToEquipLauncher; set => isOkToEquipLauncher = value; }
+    //public bool IsOkToDestroyLauncher { get => isOkToDestroyLauncher; set => isOkToDestroyLauncher = value; }
     public bool IsOkToSpawnGrenade { get => isOkToSpawnGrenade; set => isOkToSpawnGrenade = value; }
     public bool IsOkToDestroyGrenade { get => isOkToDestroyGrenade; set => isOkToDestroyGrenade = value; }
 
@@ -63,10 +63,11 @@ public class MasterManager : MonoBehaviourPunCallbacks
                 CheckGround(charModel);
                 //charModel.HandleCameraValue();
                 //HandleAnims(dir);
+                charAnim.SetBool("isWalking", true);
                 if (charactersMovementDirections.ContainsKey(charModel))
                 {
-                    charAnim.SetBool("isWalking", true);
                     var dir = charactersMovementDirections[charModel];
+                    if (dir == Vector3.zero) charAnim.SetBool("isWalking", false);
                     charModel.MovePlayer(dir.x, dir.z);
                     //charModel.LookDir(dir);
                 }
@@ -334,20 +335,42 @@ public class MasterManager : MonoBehaviourPunCallbacks
     {
         if (charactersDictionary.ContainsKey(_Client))
         {
-            IsOkToDestroyLauncher = false;
-            isOkToEquipLauncher = true;
+            //IsOkToDestroyLauncher = false;
+            //isOkToEquipLauncher = true;
         }
     }
 
     [PunRPC]
     public void SpawnGrenade(Player _client)
     {
-        if (charactersDictionary.ContainsKey(_client))
+        //if (charactersDictionary.ContainsKey(_client))
+        //{
+        isOkToSpawnGrenade = true;
+        isOkToDestroyGrenade = false;
+        //}
+    }
+
+    [PunRPC]
+    public void DestroyGrenade(Player _client)
+    {
+        if (isOkToDestroyGrenade)
         {
 
-            isOkToDestroyGrenade = false;
-            isOkToSpawnGrenade = true;
         }
+    }
+
+    [PunRPC]
+    public void InstantiateGrenadeFBX(Vector3 _position)
+    {
+        float timer = 0;
+        GameObject go = PhotonNetwork.Instantiate("PlasmaExplosionEffect", _position, Quaternion.identity);
+        timer += Time.deltaTime;
+        if (timer >= 3f)
+        {
+            isOkToDestroyGrenade = true;
+            Destroy(go);
+        }
+        isOkToDestroyGrenade = false;
     }
 
     [PunRPC]
@@ -365,8 +388,8 @@ public class MasterManager : MonoBehaviourPunCallbacks
     {
         if (charactersDictionary.ContainsKey(_client))
         {
-            isOkToEquipLauncher = false;
-            isOkToDestroyLauncher = true;
+            //isOkToEquipLauncher = false;
+            //isOkToDestroyLauncher = true;
         }
     }
 

@@ -14,13 +14,6 @@ public class Launcher : MonoBehaviourPun
     public int maxShootAmount;
     //public PickUpController pickUp;
 
-    private void Start()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Destroy(this);
-        }
-    }
     // Update is called once per frame
     void Update()
     {
@@ -28,20 +21,21 @@ public class Launcher : MonoBehaviourPun
         {
             Debug.Log("T key pressed");
             MasterManager.Instance.HandleRPC("SpawnGrenade", PhotonNetwork.LocalPlayer);
-            if (MasterManager.Instance.IsOkToSpawnGrenade) SpawnGrenade();
+            SpawnGrenade();
         }
 
         if (currentShootAmount == maxShootAmount)
         {
-            MasterManager.Instance.HandleRPC("DropLauncher", PhotonNetwork.LocalPlayer);
-            if (!MasterManager.Instance.IsOkToDestroyLauncher) PhotonNetwork.Destroy(this.gameObject);
+            currentShootAmount = 0;
+            //MasterManager.Instance.HandleRPC("DropLauncher", PhotonNetwork.LocalPlayer);
+            //if (!MasterManager.Instance.IsOkToDestroyLauncher) PhotonNetwork.Destroy(this.gameObject);
             //pickUp.Drop();
         }
     }
 
     void SpawnGrenade()
     {
-        GameObject grenadeGO = Instantiate(grenade, spawnPoint.position, spawnPoint.rotation);
+        GameObject grenadeGO = Instantiate(grenade, transform.position, transform.rotation);//PhotonNetwork.Instantiate("Grenade", spawnPoint.position, spawnPoint.rotation);
         grenadeGO.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * range, ForceMode.Impulse);
         currentShootAmount++;
     }

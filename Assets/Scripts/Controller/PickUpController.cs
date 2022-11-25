@@ -60,15 +60,15 @@ public class PickUpController : MonoBehaviourPun
         slotFull = false;
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.GetComponent<CharacterModel>() != null)
-    //    {
-    //        player = collision.gameObject.GetComponent<CharacterModel>().transform;
-    //        isColliding = true;
-    //    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<CharacterModel>() != null)
+        {
+            player = collision.gameObject.GetComponent<CharacterModel>().transform;
+            isColliding = true;
+        }
 
 
-    //}
+    }
 
 }
