@@ -2914,6 +2914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 749891566}
   - component: {fileID: 749891567}
+  - component: {fileID: 749891568}
   m_Layer: 0
   m_Name: Full Authority Controller
   m_TagString: Untagged
@@ -2954,6 +2955,28 @@ MonoBehaviour:
   dashKey: 101
   slideKey: 306
   grappleKey: 324
+--- !u!114 &749891568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749891565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &776803670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3957,6 +3980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1003106893}
   - component: {fileID: 1003106894}
+  - component: {fileID: 1003106895}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3992,6 +4016,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsToStartGame: 3
   gameStartTimer: {fileID: 1750506572961775}
+  gameTimer: {fileID: 2078539974524074868}
+--- !u!114 &1003106895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003106892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cf9a605af7747458a5c49c8003f6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMgr: {fileID: 1003106894}
   gameTimer: {fileID: 2078539974524074868}
 --- !u!1 &1008841168
 GameObject:
@@ -8430,7 +8468,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 40.4
   m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8556,7 +8594,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 32.5
   m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -65,6 +65,7 @@ MonoBehaviour:
   - StartGameTimer
   - UpdateBomb
   - UpdateNick
+  - UpdateGameTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

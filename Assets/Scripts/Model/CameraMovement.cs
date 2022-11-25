@@ -46,6 +46,7 @@ public class CameraMovement : MonoBehaviour
             //transform.position = camPos.position;
             //transform.rotation = camPos.rotation;
         }
+        else if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
     }
     void SetCameraValues()
     {
@@ -56,7 +57,7 @@ public class CameraMovement : MonoBehaviour
         yRotation += mouseX;
 
         xRotation -= mouseY;
-        Debug.Log("X ROT: " + xRotation);
+        //Debug.Log("X ROT: " + xRotation);
         xRotation = Mathf.Clamp(xRotation, -7f, 7f);
 
         transform.position = camPos.position;

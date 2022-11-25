@@ -21,6 +21,18 @@ public class GameManager : MonoBehaviourPunCallbacks
     bool isVictory = false, isDefeat = false;
     Bomb _bomb;
 
+    public Bomb GetBomb
+    {
+        get
+        {
+            return _bomb;
+        }
+    }
+
+    public bool IsGameStarted { get => isGameStarted; set => isGameStarted = value; }
+    public TextMeshProUGUI GameTimer { get => gameTimer; set => gameTimer = value; }
+    public float TimeLeft { get => timeLeft; set => timeLeft = value; }
+
     public void SetManager(CharacterModel _charModel)
     {
         _charModel.SetCharacterGameManager = this;
@@ -29,24 +41,31 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         int playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (PhotonNetwork.IsMasterClient && !isGameStarted && playersCount > 2) //> mínimo de players, >= playerCount -1 (Mínimo de players, descontando al MasterClient)
+        if (!isGameStarted && playersCount > 2) //> mínimo de players, >= playerCount -1 (Mínimo de players, descontando al MasterClient)
         {
             Debug.Log("Starting game");
             isGameStarted = true;
-            StartCoroutine(WaitToStart());
+            //StartCoroutine(WaitToStart());
         }
     }
 
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 2 && !PhotonNetwork.IsMasterClient)
         {
-            if (isGameStarted) UpdateGameTimer();//photonView.RPC("UpdateGameTimer", RpcTarget.All);
-            CheckPlayerDisconnected();
+            Debug.Log("Init counter game manager");
+            UpdateGameTimer();
+
+            //photonView.RPC("UpdateGameTimer", PhotonNetwork.MasterClient, RpcTarget.Others);
+            //if (isGameStarted) UpdateGameTimer();//photonView.RPC("UpdateGameTimer", RpcTarget.All);
+
+
             //CheckVictory();
             //CheckDefeat();
         }
+        else CheckPlayerDisconnected();
     }
+
     void CheckPlayerDisconnected()
     {
         if (!PhotonNetwork.InRoom && !PhotonNetwork.IsConnected)
@@ -80,22 +99,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(2);
         gameStartTimer.enabled = false;
-        UpdateGameTimer();
     }
 
-    IEnumerator WaitToSync()
+    public void UpdateGameTimer()
     {
-        yield return new WaitForSeconds(2);
-    }
-
-    IEnumerator WaitToStart()
-    {
-        yield return new WaitForSeconds(secondsToStartGame);
-        StartGame();
-    }
-    void UpdateGameTimer()
-    {
-
+        Debug.Log("Ok to run timer");
         gameTimer.enabled = true;
         timeLeft -= Time.deltaTime;
 
@@ -110,8 +118,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         var seconds = Mathf.FloorToInt(currentTime % 60);
 
         gameTimer.text = String.Format("{0:00}:{1:00} ", minutes, seconds);
+        Debug.Log("Gametimer timer: " + gameTimer.text);
     }
 
+
+    #region Start Game. PARA SETEAR BOMBA
+    IEnumerator WaitToStart()
+    {
+        yield return new WaitForSeconds(secondsToStartGame);
+        StartGame();
+    }
     void StartGame()
     {
         var obj = PhotonNetwork.Instantiate("Bomb", Vector3.zero, Quaternion.identity);
@@ -119,15 +135,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         _bomb = bomb;
         _bomb.SetRandomTarget();
         Debug.Log("Game Starts!"); //Lo que se puede hacer acá es habilitar el movimiento
-        //de los personajes, y empezar a correr el timer, etc.
+                                   //de los personajes, y empezar a correr el timer, etc.
     }
-    public Bomb GetBomb
-    {
-        get
-        {
-            return _bomb;
-        }
-    }
+    #endregion
 
     #region RPC's
 

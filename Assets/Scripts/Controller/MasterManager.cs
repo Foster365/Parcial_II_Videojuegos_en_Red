@@ -1,6 +1,9 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using TMPro.Examples;
 using UnityEngine;
 
@@ -14,6 +17,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
     Vector3 movementDir;
     bool gdd;
     bool isSprinting;
+    float timeLeft;
 
     public static MasterManager Instance
     {
@@ -42,7 +46,8 @@ public class MasterManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-
+            HadleGameTimer();
+            WaitToSync();
             foreach (var c in charactersDictionary)
             {
                 CharacterModel charModel = c.Value;
@@ -57,6 +62,12 @@ public class MasterManager : MonoBehaviourPunCallbacks
         }
 
     }
+    IEnumerator WaitToSync()
+    {
+        yield return new WaitForSeconds(2);
+        photonView.RPC("UpdateGameTimer", RpcTarget.Others);
+    }
+
 
     public void CheckGround(CharacterModel _character)
     {
@@ -120,7 +131,30 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region RPC'S
+    #region RPC'S [PunRPC]
+    [PunRPC]
+    void UpdateGameTimer()
+    {
+        if (gameMgr != null) gameMgr.TimeLeft = timeLeft;
+
+    }
+    void HadleGameTimer()
+    {
+        timeLeft -= Time.deltaTime;
+
+        //GameTimerCalc(timeLeft);
+
+    }
+    //public void GameTimerCalc(float currentTime)
+    //{
+    //    currentTime += 1;
+
+    //    var minutes = Mathf.FloorToInt(currentTime / 60);
+    //    var seconds = Mathf.FloorToInt(currentTime % 60);
+
+    //    _gameTimerUI.text = String.Format("{0:00}:{1:00} ", minutes, seconds);
+    //    Debug.Log("Gametimer timer: " + _gameTimerUI.text);
+    //}
     [PunRPC]
     public void SetCameraControllerRotation(Player _client)
     {
