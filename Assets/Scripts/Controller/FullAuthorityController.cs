@@ -20,7 +20,7 @@ public class FullAuthorityController : MonoBehaviourPun
 
     float horizontalInput;
     float verticalInput;
-
+    Transform cameraTransform;
     Animator animator;
 
     float moveSpeed = 5f;
@@ -38,6 +38,7 @@ public class FullAuthorityController : MonoBehaviourPun
     }
     void Start()
     {
+        cameraTransform = GameObject.Find("PlayerCam").transform;
         MasterManager.Instance.HandleRPC("RequestConnectPlayer",
             PhotonNetwork.LocalPlayer, "Banana_Man", new Vector3(0, 10, 0), Quaternion.identity);
         lastDir = Vector3.zero;
@@ -75,15 +76,15 @@ public class FullAuthorityController : MonoBehaviourPun
 
         if (dir != lastDir)
         {
-            MasterManager.Instance.HandleRPC("SetCharacterMovementDirection", PhotonNetwork.LocalPlayer, dir);
+            MasterManager.Instance.HandleRPC("SetCharacterMovementDirection", PhotonNetwork.LocalPlayer, dir);//(cameraTransform.forward * dir.y) + (cameraTransform.right * dir.x));
             lastDir = dir;
         }
         else if (dir == Vector3.zero) MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isWalking", false);
 
         HandleJumpInput();
-        HandleCrouchInputs();
+        //HandleCrouchInputs();
         //HandleDashInputs();
-        HandleSlideInputs();
+        //HandleSlideInputs();
     }
     #region Movement Input Handlers
     void HandleJumpInput()

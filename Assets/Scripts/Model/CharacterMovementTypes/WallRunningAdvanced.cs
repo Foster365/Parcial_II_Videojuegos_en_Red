@@ -1,8 +1,10 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallRunningAdvanced : MonoBehaviour
+public class WallRunningAdvanced : MonoBehaviourPun
 {
     [Header("Wallrunning")]
     public LayerMask whatIsWall;
@@ -62,7 +64,6 @@ public class WallRunningAdvanced : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Cam value is: " + cam);
         CheckForWall();
         StateMachine();
     }
@@ -138,6 +139,7 @@ public class WallRunningAdvanced : MonoBehaviour
     {
         charMoveStatesHandler.wallrunning = true;
 
+
         wallRunTimer = maxWallRunTime;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -150,6 +152,7 @@ public class WallRunningAdvanced : MonoBehaviour
 
     private void WallRunningMovement()
     {
+        MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isWallRunning", true);
         rb.useGravity = useGravity;
 
         Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
@@ -181,6 +184,7 @@ public class WallRunningAdvanced : MonoBehaviour
     {
         charMoveStatesHandler.wallrunning = false;
 
+        MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isWallRunning", false);
         // reset camera effects
         //cam.DoFov(80f);
         //cam.DoTilt(0f);

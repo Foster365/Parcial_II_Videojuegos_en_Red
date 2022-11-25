@@ -41,9 +41,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         int playersCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (!isGameStarted && playersCount > 2) //> mínimo de players, >= playerCount -1 (Mínimo de players, descontando al MasterClient)
+        if (!isGameStarted && playersCount > PhotonNetwork.CurrentRoom.MaxPlayers) //> mínimo de players, >= playerCount -1 (Mínimo de players, descontando al MasterClient)
         {
-            Debug.Log("Starting game");
             isGameStarted = true;
             //StartCoroutine(WaitToStart());
         }
@@ -51,19 +50,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount > 2 && !PhotonNetwork.IsMasterClient)
+        if (isGameStarted && !PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("Init counter game manager");
             UpdateGameTimer();
-
-            //photonView.RPC("UpdateGameTimer", PhotonNetwork.MasterClient, RpcTarget.Others);
-            //if (isGameStarted) UpdateGameTimer();//photonView.RPC("UpdateGameTimer", RpcTarget.All);
-
-
-            //CheckVictory();
-            //CheckDefeat();
         }
-        else CheckPlayerDisconnected();
+        else
+        {
+            CheckPlayerDisconnected();
+            if (timeLeft <= 0) MasterManager.Instance.HandleRPC("SendToGameOverScreen", RpcTarget.Others);
+        }
     }
 
     void CheckPlayerDisconnected()
@@ -73,12 +68,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.Log("Quitting");
             Application.Quit();
         }
-    }
-
-    [PunRPC]
-    void StartGameInitCountdown()
-    {
-        StartCoroutine(InitCountdown());
     }
 
     IEnumerator InitCountdown()
@@ -139,6 +128,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region RPC's
+    [PunRPC]
+    void StartGameInitCountdown()
+    {
+        StartCoroutine(InitCountdown());
+    }
+
 
     [PunRPC]
     void LoadWinScene()

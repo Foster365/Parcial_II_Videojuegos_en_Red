@@ -82,19 +82,6 @@ public class MasterManager : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateGameTimer", RpcTarget.Others);
     }
 
-    void HandleAnims(Vector3 dir)
-    {
-        if (dir != Vector3.zero)
-        {
-            //animator.SetBool("isWalking", true);
-            //Debug.Log("aaanimator");
-        }
-        else
-        {
-            //animator.SetBool("isWalking", false);
-        }
-    }
-
     public void CheckGround(CharacterModel _character)
     {
         gdd = Physics.Raycast(_character.transform.position, -Vector3.up, .1f, 1 << LayerMask.NameToLayer("Ground")) ? true : false;//Physics.Raycast(transform.position, Vector3.down, (_character.playerHeight * 0.5f) + 0.2f, _character.whatIsGround);
@@ -158,6 +145,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region RPC'S [PunRPC]
+
     [PunRPC]
     void UpdateGameTimer()
     {
@@ -167,7 +155,6 @@ public class MasterManager : MonoBehaviourPunCallbacks
     void HadleGameTimer()
     {
         timeLeft -= Time.deltaTime;
-
         //GameTimerCalc(timeLeft);
 
     }
@@ -215,6 +202,24 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    public void SendToWinScreen(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            PhotonNetwork.LoadLevel("Win");
+        }
+    }
+
+    [PunRPC]
+    public void SendToGameOverScreen(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            PhotonNetwork.LoadLevel("Game_Over");
+        }
+    }
+
+    [PunRPC]
     public void RequestMovementDir(Player _client, Vector3 _dir)
     {
         if (charactersDictionary.ContainsKey(_client))
@@ -232,7 +237,8 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
-            character.MovePlayer(_horizontalInput, _verticalInput);
+            Vector3 dir = new Vector3(_horizontalInput, 0, _verticalInput).normalized;
+            character.MovePlayer(dir.x, dir.z);
         }
     }
 
@@ -327,50 +333,22 @@ public class MasterManager : MonoBehaviourPunCallbacks
         if (charactersDictionary.ContainsKey(_client))
         {
             var character = charactersDictionary[_client];
-            character.GetComponent<Animator>().SetBool(_animName, _animBool);
+            Debug.Log("Char anim: " + character.CharAnim);
+            character.CharAnim.SetBool(_animName, _animBool);
         }
     }
     [PunRPC]
-    public void RequestLaucherPickUp(Player _Client)
+    public void SpawnGrenade(float _xPos, float _yPos, float _zPos)
     {
-        if (charactersDictionary.ContainsKey(_Client))
-        {
-            //IsOkToDestroyLauncher = false;
-            //isOkToEquipLauncher = true;
-        }
+        Vector3 pos = new Vector3(_xPos, _yPos, _zPos);
+        GameObject grenadeGO = PhotonNetwork.Instantiate("Grenade", pos, Quaternion.identity);
     }
 
     [PunRPC]
-    public void SpawnGrenade(Player _client)
+    public void InstantiateFBX(float _xPos, float _yPos, float _zPos)
     {
-        //if (charactersDictionary.ContainsKey(_client))
-        //{
-        isOkToSpawnGrenade = true;
-        isOkToDestroyGrenade = false;
-        //}
-    }
-
-    [PunRPC]
-    public void DestroyGrenade(Player _client)
-    {
-        if (isOkToDestroyGrenade)
-        {
-
-        }
-    }
-
-    [PunRPC]
-    public void InstantiateGrenadeFBX(Vector3 _position)
-    {
-        float timer = 0;
-        GameObject go = PhotonNetwork.Instantiate("PlasmaExplosionEffect", _position, Quaternion.identity);
-        timer += Time.deltaTime;
-        if (timer >= 3f)
-        {
-            isOkToDestroyGrenade = true;
-            Destroy(go);
-        }
-        isOkToDestroyGrenade = false;
+        Vector3 pos = new Vector3(_xPos, _yPos, _zPos);
+        PhotonNetwork.Instantiate("PlasmaExplosionEffect", pos, Quaternion.identity);
     }
 
     [PunRPC]
@@ -381,22 +359,6 @@ public class MasterManager : MonoBehaviourPunCallbacks
             isOkToSpawnGrenade = false;
             isOkToDestroyGrenade = true;
         }
-    }
-
-    [PunRPC]
-    public void DropLauncher(Player _client, GameObject _launcherGO)
-    {
-        if (charactersDictionary.ContainsKey(_client))
-        {
-            //isOkToEquipLauncher = false;
-            //isOkToDestroyLauncher = true;
-        }
-    }
-
-    [PunRPC]
-    public void RequestLauncherDrop(Player _client, PickUpController _pickUpController)
-    {
-        _pickUpController.equipped = false;
     }
 
     [PunRPC]

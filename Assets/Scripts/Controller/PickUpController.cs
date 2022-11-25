@@ -30,13 +30,13 @@ public class PickUpController : MonoBehaviourPun
 
     private void Update()
     {
-        if (!equipped && isColliding && !slotFull && Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("Q code pressed");
-            MasterManager.Instance.HandleRPC("RequestLaucherPickUp", PhotonNetwork.LocalPlayer);
-            Equip();
-            slotFull = true;
-        }
+        //if (!equipped && isColliding && !slotFull && Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    Debug.Log("Q code pressed");
+        //    MasterManager.Instance.HandleRPC("RequestLaucherPickUp", PhotonNetwork.LocalPlayer);
+        //    Equip();
+        //    slotFull = true;
+        //}
     }
 
     void Equip()

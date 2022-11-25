@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
 
 public class Grenade : MonoBehaviourPun
@@ -13,6 +14,7 @@ public class Grenade : MonoBehaviourPun
     public GameObject effect;
     private void Start()
     {
+        gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 15f, ForceMode.Impulse);
         Invoke("Explode", delay);
     }
 
@@ -36,7 +38,7 @@ public class Grenade : MonoBehaviourPun
             }
             Debug.Log(hit.name);
         }
-        InstantiateFBX(explosionPos);
+        MasterManager.Instance.HandleRPC("InstantiateFBX", explosionPos.x, explosionPos.y, explosionPos.z);
         //MasterManager.Instance.HandleRPC("InstantiateGrenadeFBX", explosionPos);
         Destroy(gameObject);
     }

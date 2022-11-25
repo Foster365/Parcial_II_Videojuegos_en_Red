@@ -73,6 +73,11 @@ MonoBehaviour:
   - ResetSpawnGrenadeBoolean
   - DestroyGrenade
   - InstantiateGrenadeFBX
+  - InstantiateFBX
+  - ImDead
+  - SendToWinScreen
+  - SendToGameOverScreen
+  - Disconnect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -77,6 +77,7 @@ public class CharacterMovementStatesHandler : MonoBehaviourPun
         else if (playerMovement.Grounded && Input.GetKey(fullAuthController.sprintKey))
         {
             state = MovementState.sprinting;
+            MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isRunning", true);
             desiredMoveSpeed = playerMovement.sprintSpeed;
         }
 
@@ -85,6 +86,7 @@ public class CharacterMovementStatesHandler : MonoBehaviourPun
         {
             state = MovementState.walking;
             desiredMoveSpeed = playerMovement.walkSpeed;
+            MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isRunning", false);
         }
 
         // Mode - Air

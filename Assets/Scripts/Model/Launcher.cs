@@ -19,9 +19,10 @@ public class Launcher : MonoBehaviourPun
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log("T key pressed");
-            MasterManager.Instance.HandleRPC("SpawnGrenade", PhotonNetwork.LocalPlayer);
-            SpawnGrenade();
+            MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isShooting", true);
+            MasterManager.Instance.HandleRPC("SpawnGrenade", spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+            currentShootAmount++;
+            MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isShooting", false);
         }
 
         if (currentShootAmount == maxShootAmount)

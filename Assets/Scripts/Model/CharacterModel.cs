@@ -71,6 +71,7 @@ public class CharacterModel : MonoBehaviourPun
     CameraMovement camMovement;
     Animator charAnim;
     GameManager characterGameManager;
+    Transform cameraTransform;
 
     #region Encapsulated variables
     public Rigidbody Rb { get => rb; set => rb = value; }
@@ -95,7 +96,6 @@ public class CharacterModel : MonoBehaviourPun
 
     private void Start()
     {
-
         rb.freezeRotation = true;
         readyToJump = true;
         startYScale = transform.localScale.y;
@@ -120,9 +120,6 @@ public class CharacterModel : MonoBehaviourPun
     {
         camMovement = GameObject.FindObjectOfType<CameraMovement>();//transform;
         camMovement.CamPos = camPos;
-        //GameObject.FindObjectOfType<CameraMovement>().CamHolder = camPos;
-        //GameObject.FindObjectOfType<CameraMovement>().Orientation = camPos;
-        //Lo mismo con orientation
     }
 
     #region Character Movement
@@ -147,7 +144,7 @@ public class CharacterModel : MonoBehaviourPun
         // on slope
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 5f, ForceMode.Force);
 
             if (rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -311,6 +308,7 @@ public class CharacterModel : MonoBehaviourPun
     [PunRPC]
     public void Die()
     {
+        MasterManager.Instance.HandleRPC("ImDead", PhotonNetwork.LocalPlayer);
         MasterManager.Instance.RemoveCharacterModel(this);
         PhotonNetwork.Destroy(gameObject);
     }
