@@ -24,7 +24,7 @@ public class FullAuthorityController : MonoBehaviourPun
     Animator animator;
 
     float moveSpeed = 5f;
-
+    CharacterModel charModel;
     Vector3 lastDir;
     // Start is called before the first frame update
 
@@ -38,7 +38,6 @@ public class FullAuthorityController : MonoBehaviourPun
     }
     void Start()
     {
-        animator = GetComponent<Animator>();
         MasterManager.Instance.HandleRPC("RequestConnectPlayer",
             PhotonNetwork.LocalPlayer, "Banana_Man", new Vector3(0, 10, 0), Quaternion.identity);
         lastDir = Vector3.zero;
@@ -79,10 +78,11 @@ public class FullAuthorityController : MonoBehaviourPun
             MasterManager.Instance.HandleRPC("SetCharacterMovementDirection", PhotonNetwork.LocalPlayer, dir);
             lastDir = dir;
         }
+        else if (dir == Vector3.zero) MasterManager.Instance.HandleRPC("RequestBoolAnimation", PhotonNetwork.LocalPlayer, "isWalking", false);
 
         HandleJumpInput();
         HandleCrouchInputs();
-        HandleDashInputs();
+        //HandleDashInputs();
         HandleSlideInputs();
     }
     #region Movement Input Handlers

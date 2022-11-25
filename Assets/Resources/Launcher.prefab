@@ -242,7 +242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 3741906467085655680}
   grenade: {fileID: 7352814311369781774, guid: 7fe989748d5d9094f98e990e6092a2fc, type: 3}
+  me: {fileID: 0}
   range: 15
+  currentShootAmount: 1
+  maxShootAmount: 5
 --- !u!1 &3741906467085655681
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,22 +1,25 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpController : MonoBehaviour
+public class PickUpController : MonoBehaviourPun
 {
     public Launcher launcherScript;
     public Rigidbody rb;
     public BoxCollider coll;
-    public Transform player, gunContainer, fpsCam;
+    public Transform player;
 
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
 
     public bool equipped;
     public static bool slotFull;
+    bool isColliding = false;
 
     private void Start()
     {
+        if (PhotonNetwork.IsMasterClient) Destroy(this);
         if (!equipped)
         {
             launcherScript.enabled = false;
@@ -27,15 +30,20 @@ public class PickUpController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 distanceToPlayer = player.position - transform.position;
-        if (!equipped && distanceToPlayer.magnitude <= pickUpRange && !slotFull && Input.GetKeyDown(KeyCode.Q)) PickUp();
+        if (!equipped && isColliding && !slotFull && Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Q code pressed");
+            MasterManager.Instance.HandleRPC("RequestLaucherPickUp", PhotonNetwork.LocalPlayer);
+            Equip();
+            slotFull = true;
+        }
     }
 
-    private void PickUp()
+    void Equip()
     {
+        Debug.Log("Attaching Launcher to player");
         equipped = true;
-        slotFull = true;
-        transform.SetParent(gunContainer);
+        transform.SetParent(FindObjectOfType<LauncherContainer>().transform);//(gunContainer);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
@@ -44,11 +52,23 @@ public class PickUpController : MonoBehaviour
         coll.isTrigger = true;
 
         launcherScript.enabled = true;
+
     }
 
     public void Drop()
     {
-        equipped = false;
         slotFull = false;
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.GetComponent<CharacterModel>() != null)
+    //    {
+    //        player = collision.gameObject.GetComponent<CharacterModel>().transform;
+    //        isColliding = true;
+    //    }
+
+
+    //}
+
 }

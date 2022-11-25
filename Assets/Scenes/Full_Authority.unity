@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: f2a8aa6126ddf414ab96475a08764e70, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 67ffdbf1014094841a7d5a21fda6e93c, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -584,7 +584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6905441565282389543, guid: 7c138579c79721c458f6a232d1e7e78f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 284.94452
+      value: 284.94357
       objectReference: {fileID: 0}
     - target: {fileID: 7680733891474803252, guid: 7c138579c79721c458f6a232d1e7e78f, type: 3}
       propertyPath: m_SizeDelta.x
@@ -778,7 +778,7 @@ PrefabInstance:
     - target: {fileID: 5771128404323868798, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: pickUp
       value: 
-      objectReference: {fileID: 89803764}
+      objectReference: {fileID: 0}
     - target: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: fpsCam
       value: 
@@ -791,19 +791,56 @@ PrefabInstance:
       propertyPath: gunContainer
       value: 
       objectReference: {fileID: 237060291}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
---- !u!114 &89803764 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+--- !u!1 &89803764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1832251536301521333, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_PrefabInstance: {fileID: 89803763}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &89803765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89803764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576f87336c4162f439b5fb03f83746d0, type: 3}
+  m_Script: {fileID: 11500000, guid: b1cf3ba4c797e904f9d7cb57d4553d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcherScript: {fileID: 5771128404323868799}
+  rb: {fileID: 5771128404323868798}
+  coll: {fileID: 5771128404323868796}
+  player: {fileID: 0}
+  pickUpRange: 5
+  dropForwardForce: 10
+  dropUpwardForce: 10
+  equipped: 0
+--- !u!114 &89803766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89803764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &92595629 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1570124979293412766, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
@@ -1750,7 +1787,7 @@ PrefabInstance:
     - target: {fileID: 5771128404323868798, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: pickUp
       value: 
-      objectReference: {fileID: 405737177}
+      objectReference: {fileID: 0}
     - target: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: fpsCam
       value: 
@@ -1763,19 +1800,56 @@ PrefabInstance:
       propertyPath: gunContainer
       value: 
       objectReference: {fileID: 237060291}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
---- !u!114 &405737177 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+--- !u!1 &405737177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1832251536301521333, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_PrefabInstance: {fileID: 405737176}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &405737178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405737177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576f87336c4162f439b5fb03f83746d0, type: 3}
+  m_Script: {fileID: 11500000, guid: b1cf3ba4c797e904f9d7cb57d4553d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcherScript: {fileID: 5771128404323868799}
+  rb: {fileID: 5771128404323868798}
+  coll: {fileID: 5771128404323868796}
+  player: {fileID: 0}
+  pickUpRange: 5
+  dropForwardForce: 10
+  dropUpwardForce: 10
+  equipped: 0
+--- !u!114 &405737179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405737177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &455299900
 GameObject:
   m_ObjectHideFlags: 0
@@ -7516,7 +7590,7 @@ PrefabInstance:
     - target: {fileID: 5771128404323868798, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: pickUp
       value: 
-      objectReference: {fileID: 1909726538}
+      objectReference: {fileID: 0}
     - target: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: fpsCam
       value: 
@@ -7529,19 +7603,56 @@ PrefabInstance:
       propertyPath: gunContainer
       value: 
       objectReference: {fileID: 237060291}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
---- !u!114 &1909726538 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+--- !u!1 &1909726538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1832251536301521333, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_PrefabInstance: {fileID: 1909726537}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &1909726539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909726538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576f87336c4162f439b5fb03f83746d0, type: 3}
+  m_Script: {fileID: 11500000, guid: b1cf3ba4c797e904f9d7cb57d4553d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcherScript: {fileID: 5771128404323868799}
+  rb: {fileID: 5771128404323868798}
+  coll: {fileID: 5771128404323868796}
+  player: {fileID: 0}
+  pickUpRange: 5
+  dropForwardForce: 10
+  dropUpwardForce: 10
+  equipped: 0
+--- !u!114 &1909726540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909726538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 6
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1945732722
 GameObject:
   m_ObjectHideFlags: 0
@@ -8681,7 +8792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1750506572961774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8748,7 +8859,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.4
+  m_fontSize: 19.85
   m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8874,7 +8985,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.5
+  m_fontSize: 19.1
   m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8982,7 +9093,7 @@ PrefabInstance:
     - target: {fileID: 5771128404323868798, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: pickUp
       value: 
-      objectReference: {fileID: 5771128404323868801}
+      objectReference: {fileID: 0}
     - target: {fileID: 5771128404323868798, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
       propertyPath: maxShootAmount
       value: 1
@@ -8999,16 +9110,74 @@ PrefabInstance:
       propertyPath: gunContainer
       value: 
       objectReference: {fileID: 237060291}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
---- !u!114 &5771128404323868801 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5771128404323868801, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+--- !u!65 &5771128404323868796 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5771128404323868799, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
   m_PrefabInstance: {fileID: 5771128404323868795}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!1 &5771128404323868797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1832251536301521333, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+  m_PrefabInstance: {fileID: 5771128404323868795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &5771128404323868798 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 5771128404323868800, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+  m_PrefabInstance: {fileID: 5771128404323868795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5771128404323868799 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5771128404323868798, guid: 1dbc497033779b84f83114998954ea0c, type: 3}
+  m_PrefabInstance: {fileID: 5771128404323868795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771128404323868797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576f87336c4162f439b5fb03f83746d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 243d5af1564e2c040bded979b90dc0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5771128404323868800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771128404323868797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1cf3ba4c797e904f9d7cb57d4553d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  launcherScript: {fileID: 5771128404323868799}
+  rb: {fileID: 5771128404323868798}
+  coll: {fileID: 5771128404323868796}
+  player: {fileID: 0}
+  pickUpRange: 5
+  dropForwardForce: 10
+  dropUpwardForce: 10
+  equipped: 0
+--- !u!114 &5771128404323868801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5771128404323868797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

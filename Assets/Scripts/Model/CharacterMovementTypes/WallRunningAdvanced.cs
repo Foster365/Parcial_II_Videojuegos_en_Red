@@ -42,7 +42,7 @@ public class WallRunningAdvanced : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    public PlayerCameraController cam;
+    public CameraMovement cam;
     private CharacterModel pm;
     private Rigidbody rb;
 
@@ -56,12 +56,13 @@ public class WallRunningAdvanced : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        cam = GetComponent<PlayerCameraController>();
+        cam = GameObject.FindObjectOfType<CameraMovement>().gameObject.GetComponent<CameraMovement>();
         //pm = GetComponent<PlayerMovementAdvanced>();
     }
 
     private void Update()
     {
+        Debug.Log("Cam value is: " + cam);
         CheckForWall();
         StateMachine();
     }
@@ -142,9 +143,9 @@ public class WallRunningAdvanced : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         // apply camera effects
-        cam.DoFov(90f);
-        if (wallLeft) cam.DoTilt(-5f);
-        if (wallRight) cam.DoTilt(5f);
+        //cam.DoFov(90f);
+        //if (wallLeft) cam.DoTilt(-5f);
+        //if (wallRight) cam.DoTilt(5f);
     }
 
     private void WallRunningMovement()
@@ -181,8 +182,8 @@ public class WallRunningAdvanced : MonoBehaviour
         charMoveStatesHandler.wallrunning = false;
 
         // reset camera effects
-        cam.DoFov(80f);
-        cam.DoTilt(0f);
+        //cam.DoFov(80f);
+        //cam.DoTilt(0f);
     }
 
     private void WallJump()

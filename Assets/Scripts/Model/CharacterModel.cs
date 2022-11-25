@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -18,6 +19,7 @@ public class CharacterModel : MonoBehaviourPun
     public float walkSpeed;
     public float sprintSpeed;
     public float wallRunSpeed;
+    public float rotSpeed;
 
     public float dashSpeed;
     public float dashSpeedChangeFactor;
@@ -67,9 +69,8 @@ public class CharacterModel : MonoBehaviourPun
     Grapple characterGrapple;
     Rigidbody rb;
     CameraMovement camMovement;
-    CharacterAnimations charAnimations;
+    Animator charAnim;
     GameManager characterGameManager;
-    PlayerCameraController camController;
 
     #region Encapsulated variables
     public Rigidbody Rb { get => rb; set => rb = value; }
@@ -80,14 +81,13 @@ public class CharacterModel : MonoBehaviourPun
     public DashMovement CharacterDash { get => characterDash; set => characterDash = value; }
     public SlideMovement CharacterSlideMovement { get => characterSlideMovement; set => characterSlideMovement = value; }
     public Grapple CharacterGrapple { get => characterGrapple; set => characterGrapple = value; }
-    public CharacterAnimations CharAnimations { get => charAnimations; set => charAnimations = value; }
 
     #endregion
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        charAnimations = GetComponent<CharacterAnimations>();
+        charAnim = GetComponent<Animator>();
         charMoveStatesHandler = GetComponent<CharacterMovementStatesHandler>();
         characterDash = GetComponent<DashMovement>();
         CharacterSlideMovement = GetComponent<SlideMovement>();
@@ -109,6 +109,8 @@ public class CharacterModel : MonoBehaviourPun
         }
     }
 
+    public Animator CharAnim { get => charAnim; set => charAnim = value; }
+
     public void HandleCameraValue()
     {
     }
@@ -127,13 +129,16 @@ public class CharacterModel : MonoBehaviourPun
 
     public void MovePlayer(float _horizontalInput, float _verticalInput)
     {
+
+        Debug.Log("Moving player");
         if (camMovement) camMovement.CamPos = camPos;
         //photonView.RPC("ActivateCamaraGIl", PhotonNetwork.MasterClient, PhotonNetwork.LocalPlayer);
         if (charMoveStatesHandler.state == CharacterMovementStatesHandler.MovementState.dashing) return;
 
         // calculate movement direction
         //moveDirection = ((orientation.forward * _verticalInput) + (orientation.right * _horizontalInput)).normalized;
-        moveDirection = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
+        moveDirection = (orientation.forward * _verticalInput) + (orientation.right * _horizontalInput);
+        LookDir(moveDirection);
         //Vector3 dir *= moveSpeed;
         //dir.y = rb.velocity.y;
         //rb.velocity = dir;
@@ -142,7 +147,7 @@ public class CharacterModel : MonoBehaviourPun
         // on slope
         if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 10f, ForceMode.Force);
 
             if (rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -162,15 +167,15 @@ public class CharacterModel : MonoBehaviourPun
 
         // turn gravity off while on slope
         rb.useGravity = !OnSlope();
+
     }
-    //public void Move(Vector3 _dir)
-    //{
-    //    _dir *= moveSpeed;
-    //    _dir.y = rb.velocity.y;
-    //    rb.velocity = _dir;
-
-    //}
-
+    public void LookDir(Vector3 _dir)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(_dir, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotSpeed * Time.deltaTime);
+        //FindObjectOfType<CameraMovement>().MovRotation = transform.rotation;
+        //transform.forward = Vector3.Lerp(transform.forward, _dir, rotSpeed * Time.deltaTime);
+    }
     public void Sprint()
     {
     }

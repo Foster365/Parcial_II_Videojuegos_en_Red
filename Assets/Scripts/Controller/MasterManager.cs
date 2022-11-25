@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using TMPro.Examples;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class MasterManager : MonoBehaviourPunCallbacks
 {
@@ -18,6 +19,9 @@ public class MasterManager : MonoBehaviourPunCallbacks
     bool gdd;
     bool isSprinting;
     float timeLeft;
+    bool isOkToEquipLauncher;
+    bool isOkToDestroyLauncher;
+    bool isOkToSpawnGrenade, isOkToDestroyGrenade;
 
     public static MasterManager Instance
     {
@@ -28,6 +32,10 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
 
     public Dictionary<Player, CharacterModel> CharactersDictionary { get => charactersDictionary; set => charactersDictionary = value; }
+    public bool IsOkToEquipLauncher { get => isOkToEquipLauncher; set => isOkToEquipLauncher = value; }
+    public bool IsOkToDestroyLauncher { get => isOkToDestroyLauncher; set => isOkToDestroyLauncher = value; }
+    public bool IsOkToSpawnGrenade { get => isOkToSpawnGrenade; set => isOkToSpawnGrenade = value; }
+    public bool IsOkToDestroyGrenade { get => isOkToDestroyGrenade; set => isOkToDestroyGrenade = value; }
 
     private void Awake()
     {
@@ -51,18 +59,22 @@ public class MasterManager : MonoBehaviourPunCallbacks
             foreach (var c in charactersDictionary)
             {
                 CharacterModel charModel = c.Value;
+                Animator charAnim = charModel.CharAnim;
                 CheckGround(charModel);
                 //charModel.HandleCameraValue();
                 //HandleAnims(dir);
                 if (charactersMovementDirections.ContainsKey(charModel))
                 {
+                    charAnim.SetBool("isWalking", true);
                     var dir = charactersMovementDirections[charModel];
                     charModel.MovePlayer(dir.x, dir.z);
+                    //charModel.LookDir(dir);
                 }
             }
         }
 
     }
+
     IEnumerator WaitToSync()
     {
         yield return new WaitForSeconds(2);
@@ -187,7 +199,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RequestConnectPlayer(Player _client, string _clientPrefName, Vector3 _pos, Quaternion _rot)
+    public CharacterModel RequestConnectPlayer(Player _client, string _clientPrefName, Vector3 _pos, Quaternion _rot)
     {
         GameObject playerGO = PhotonNetwork.Instantiate(_clientPrefName, _pos, _rot);
         var character = playerGO.GetComponent<CharacterModel>();
@@ -198,6 +210,7 @@ public class MasterManager : MonoBehaviourPunCallbacks
         DashMovement dash = character.gameObject.GetComponent<DashMovement>();
 
         dash.Cam = character.gameObject.GetComponent<PlayerCameraController>();
+        return character;
     }
 
     [PunRPC]
@@ -315,6 +328,52 @@ public class MasterManager : MonoBehaviourPunCallbacks
             var character = charactersDictionary[_client];
             character.GetComponent<Animator>().SetBool(_animName, _animBool);
         }
+    }
+    [PunRPC]
+    public void RequestLaucherPickUp(Player _Client)
+    {
+        if (charactersDictionary.ContainsKey(_Client))
+        {
+            IsOkToDestroyLauncher = false;
+            isOkToEquipLauncher = true;
+        }
+    }
+
+    [PunRPC]
+    public void SpawnGrenade(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+
+            isOkToDestroyGrenade = false;
+            isOkToSpawnGrenade = true;
+        }
+    }
+
+    [PunRPC]
+    public void ResetSpawnGrenadeBoolean(Player _client)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            isOkToSpawnGrenade = false;
+            isOkToDestroyGrenade = true;
+        }
+    }
+
+    [PunRPC]
+    public void DropLauncher(Player _client, GameObject _launcherGO)
+    {
+        if (charactersDictionary.ContainsKey(_client))
+        {
+            isOkToEquipLauncher = false;
+            isOkToDestroyLauncher = true;
+        }
+    }
+
+    [PunRPC]
+    public void RequestLauncherDrop(Player _client, PickUpController _pickUpController)
+    {
+        _pickUpController.equipped = false;
     }
 
     [PunRPC]

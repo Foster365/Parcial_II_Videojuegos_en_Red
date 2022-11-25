@@ -53,7 +53,7 @@ public class DashMovement : MonoBehaviourPun
         charMoveStatesHandler.dashing = true;
         pm.maxYSpeed = maxDashYSpeed;
 
-        cam.DoFov(dashFov);
+        //cam.DoFov(dashFov);
 
         Transform forwardT;
 
@@ -93,7 +93,7 @@ public class DashMovement : MonoBehaviourPun
         charMoveStatesHandler.dashing = false;
         pm.maxYSpeed = 0;
 
-        cam.DoFov(85f);
+        //cam.DoFov(85f);
 
         if (disableGravity)
             rb.useGravity = true;
