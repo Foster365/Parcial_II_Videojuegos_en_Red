@@ -30,7 +30,7 @@ public class ChatPhoton : MonoBehaviour, IChatClientListener
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            inputField.Select();
+            inputField.ActivateInputField();
         }
     }
 

@@ -132,7 +132,11 @@ public class CharacterModel : MonoBehaviourPun
         if (charMoveStatesHandler.state == CharacterMovementStatesHandler.MovementState.dashing) return;
 
         // calculate movement direction
-        moveDirection = ((orientation.forward * _verticalInput) + (orientation.right * _horizontalInput)).normalized;
+        //moveDirection = ((orientation.forward * _verticalInput) + (orientation.right * _horizontalInput)).normalized;
+        moveDirection = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
+        //Vector3 dir *= moveSpeed;
+        //dir.y = rb.velocity.y;
+        //rb.velocity = dir;
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), Time.deltaTime * 40f);
         SpeedControl();
         // on slope

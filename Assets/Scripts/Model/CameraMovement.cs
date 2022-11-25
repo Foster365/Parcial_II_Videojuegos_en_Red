@@ -18,7 +18,7 @@ public class CameraMovement : MonoBehaviour
     float yRotation;
 
     public Transform CamPos { get => camPos; set => camPos = value; }
-    public Transform Orientation { get => orientation; set => orientation = value; }
+    //public Transform Orientation { get => orientation; set => orientation = value; }
     public Transform CamHolder { get => camHolder; set => camHolder = value; }
 
     private void Start()
@@ -31,6 +31,7 @@ public class CameraMovement : MonoBehaviour
         sensY = 400;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        orientation = transform.Find("Orientation");
 
     }
     void Update()
@@ -61,7 +62,6 @@ public class CameraMovement : MonoBehaviour
 
         transform.position = camPos.position;
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        //transform.rotation = Quaternion.Euler(0, yRotation, 0);
 
     }
     public void DoFov(float endValue)
