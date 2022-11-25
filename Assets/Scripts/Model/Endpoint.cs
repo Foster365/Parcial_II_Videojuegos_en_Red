@@ -15,14 +15,26 @@ public class Endpoint : MonoBehaviourPun
         {
             timesCollided++;
             Debug.Log("Collided with playerrrrrr" + other.gameObject);
-            photonView.RPC("Disconnect", RpcTarget.Others);// MasterManager.Instance.HandleRPC("SendToWinScreen", PhotonNetwork.LocalPlayer);
-            if (timesCollided == 2) PhotonNetwork.Destroy(gameObject);
+            photonView.RPC("Win", RpcTarget.Others);// MasterManager.Instance.HandleRPC("SendToWinScreen", PhotonNetwork.LocalPlayer);
+            if (timesCollided == 2)
+            {
+                photonView.RPC("Lose", RpcTarget.Others);
+                PhotonNetwork.Destroy(gameObject);
+            }
 
         }
 
     }
+
     [PunRPC]
-    public void Disconnect()
+    public void Lose()
+    {
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("Game_Over");
+    }
+
+    [PunRPC]
+    public void Win()
     {
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("Win");
