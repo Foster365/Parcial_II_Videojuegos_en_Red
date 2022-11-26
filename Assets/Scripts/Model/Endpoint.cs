@@ -15,12 +15,12 @@ public class Endpoint : MonoBehaviourPun
         {
             timesCollided++;
             Debug.Log("Collided with playerrrrrr" + other.gameObject);
-            photonView.RPC("Win", RpcTarget.Others);// MasterManager.Instance.HandleRPC("SendToWinScreen", PhotonNetwork.LocalPlayer);
-            if (timesCollided == 2)
+            if (PhotonNetwork.IsMasterClient)
             {
+                photonView.RPC("Win", RpcTarget.Others);// MasterManager.Instance.HandleRPC("SendToWinScreen", PhotonNetwork.LocalPlayer);
                 photonView.RPC("Lose", RpcTarget.Others);
-                PhotonNetwork.Destroy(gameObject);
             }
+            PhotonNetwork.Destroy(gameObject);
 
         }
 
